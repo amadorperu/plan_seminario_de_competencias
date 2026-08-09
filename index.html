@@ -8,35 +8,38 @@
 
 <!--
 ======================================================================
-  CONFIGURACIÓN DEL ENVÍO  ·  LÉEME  (elige UNA opción para el docente)
+  EL PUENTE PARA QUE EL CORREO LLEGUE A TU GMAIL  ·  LÉEME
 ======================================================================
-  El correo antes no llegaba porque un sitio estático no puede enviar
-  correos solo, y FormSubmit exige una activación que suele caer en spam.
-  Elige la opción 1 o la 2 (más confiables). La 3 queda de respaldo.
+  Un sitio en GitHub Pages no envía correos solo. Necesita un puente.
+  El más simple y que SÍ llega a Gmail es Web3Forms (opción 2).
 
-  1) n8n (recomendado para ti): pega la URL de un webhook de n8n en
-     "webhookUrl". n8n recibe el JSON del plan y tú envías el correo
-     desde tu propio flujo. Es lo más confiable y bajo tu control.
+  ELIGE UNA:
 
-  2) Web3Forms (sin servidor, sin activación): entra a
-     https://web3forms.com , escribe tu correo y te dan un Access Key
-     al instante. Pégalo en "web3formsKey". Llega de inmediato.
+  1) n8n: pega la URL de tu webhook en "webhookUrl". n8n recibe el
+     plan en JSON y tú lo envías desde tu flujo. Lo más confiable.
 
-  3) FormSubmit (respaldo): deja tu correo en "formsubmitEmail". La
-     PRIMERA vez debes abrir el correo de activación de FormSubmit
-     (revisa spam) y hacer clic una sola vez.
+  2) Web3Forms (recomendado, 30 segundos):
+        a. Entra a https://web3forms.com
+        b. Escribe tu correo: amador.rivera@pucp.edu.pe
+        c. Te llega/da un "Access Key". Cópialo.
+        d. Pégalo abajo en "web3formsKey" entre comillas.
+     Desde ahí, cada plan llega a tu bandeja de inmediato.
 
-  COPIA AL ALUMNO (opcional): si además quieres que al participante le
-  llegue una copia a su propio correo, crea cuenta gratis en
-  https://www.emailjs.com y pega las 3 claves en "emailjs". En el
-  template pon: To Email {{to_email}}, Reply To {{reply_to}},
-  Subject "Tu Plan - {{to_name}}" y en Content solo {{mensaje}}.
+  3) FormSubmit (respaldo): usa "formsubmitEmail". La PRIMERA vez
+     FormSubmit te manda un correo de activación. En Gmail suele caer
+     en Spam o en la pestaña Promociones. Ábrelo, haz clic en activar
+     una sola vez y listo.
+
+  Si nada está configurado, el alumno igual descarga su PDF/Word y la
+  pantalla final muestra un botón para enviarte el plan desde su correo.
+
+  COPIA AL ALUMNO (opcional): con EmailJS. Pega 3 claves en "emailjs".
 ======================================================================
 -->
 <script>
   const CONFIG = {
-    webhookUrl:      "",   // 1) URL de tu webhook n8n (recomendado)
-    web3formsKey:    "",   // 2) Access Key de web3forms.com
+    webhookUrl:      "",   // 1) URL de tu webhook n8n
+    web3formsKey:    "",   // 2) Access Key de web3forms.com  (recomendado)
     formsubmitEmail: "amador.rivera@pucp.edu.pe", // 3) respaldo
     emailjs: { publicKey:"", serviceId:"", templateId:"" } // copia al alumno (opcional)
   };
@@ -50,86 +53,80 @@
 
 <style>
 :root{
-  --bg:#0B0C13; --surface:#161826; --surface2:#1E2132; --line:rgba(255,255,255,.10);
-  --text:#EBEDF6; --muted:#9AA3BE; --heading:#F4F6FC;
-  --g1a:#4E63E8; --g1b:#C46BD6;         /* azul -> magenta */
-  --g2a:#8A7BF0; --g2b:#86D9E6;         /* violeta -> cian */
-  --g3a:#5FA9CC; --g3b:#2C5F8A; --ring:#A56BE0; /* teal + aro violeta */
-  --grad1:linear-gradient(135deg,var(--g1a),var(--g1b));
-  --grad2:linear-gradient(135deg,var(--g2a),var(--g2b));
-  --grad3:linear-gradient(135deg,var(--g3a),var(--g3b));
-  --ok:#3AD68A; --warn:#F0B646; --bad:#FF6B6B;
-  --radius:16px;
+  --bg:#0A0F1E; --surface:#121A2E; --surface2:#18223B; --line:rgba(255,255,255,.10);
+  --text:#E9F0FB; --muted:#93A4C4; --heading:#F3F7FF;
+  --cyan:#5DE0E6; --blue:#004AAD;
+  --grad:linear-gradient(90deg,#5DE0E6,#004AAD);        /* exacto, decorativo */
+  --grad-135:linear-gradient(135deg,#5DE0E6,#004AAD);
+  --grad-cta:linear-gradient(90deg,#17A2C4,#004AAD);    /* texto blanco legible */
+  --grad-text:linear-gradient(90deg,#6FE6EB,#4DA6FF);   /* texto en gradiente */
+  --ok:#3AD68A; --warn:#F0B646; --bad:#FF6B6B; --radius:16px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0; background:var(--bg); color:var(--text); position:relative; min-height:100vh;
-  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif; font-size:16px; line-height:1.55;
-  -webkit-font-smoothing:antialiased;}
-/* imagen ambiente: orbes de gradiente difuminados */
+  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif; font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;}
 body::before{content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
   background:
-    radial-gradient(420px 420px at 12% 8%, rgba(78,99,232,.28), transparent 60%),
-    radial-gradient(460px 460px at 92% 4%, rgba(196,107,214,.22), transparent 60%),
-    radial-gradient(520px 520px at 85% 88%, rgba(134,217,230,.16), transparent 62%),
-    radial-gradient(480px 480px at 8% 92%, rgba(165,107,224,.18), transparent 62%);}
+    radial-gradient(430px 430px at 10% 6%, rgba(93,224,230,.20), transparent 60%),
+    radial-gradient(500px 500px at 94% 3%, rgba(0,74,173,.42), transparent 62%),
+    radial-gradient(520px 520px at 86% 92%, rgba(93,224,230,.12), transparent 62%),
+    radial-gradient(480px 480px at 6% 94%, rgba(0,74,173,.30), transparent 62%);}
 main,header,.navbar{position:relative; z-index:1}
 h1,h2,h3{font-family:"Fraunces",Georgia,serif; font-weight:600; line-height:1.14; color:var(--heading); margin:0}
 p{margin:0 0 .8rem}
-a{color:var(--g2b)}
-.eyebrow{font-family:"Inter",sans-serif; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-  font-size:.68rem; background:var(--grad2); -webkit-background-clip:text; background-clip:text; color:transparent}
+a{color:var(--cyan)}
+.eyebrow{font-family:"Inter",sans-serif; font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.68rem;
+  background:var(--grad-text); -webkit-background-clip:text; background-clip:text; color:transparent}
 
-/* HEADER */
-header{background:rgba(11,12,19,.72); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+header{background:rgba(10,15,30,.72); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   position:sticky; top:0; z-index:50; border-bottom:1px solid var(--line)}
-header::after{content:""; display:block; height:3px; background:var(--grad1)}
+header::after{content:""; display:block; height:3px; background:var(--grad)}
 .head-inner{max-width:800px; margin:0 auto; padding:.7rem 1rem; display:flex; align-items:center; gap:.7rem}
-.brand-mark{width:36px; height:36px; border-radius:50%; flex:0 0 auto; background:var(--grad1);
+.brand-mark{width:36px; height:36px; border-radius:50%; flex:0 0 auto; background:var(--grad);
   display:grid; place-items:center; font-family:"Fraunces",serif; font-weight:600; color:#fff; font-size:1.05rem;
-  box-shadow:0 0 0 2px rgba(165,107,224,.55), 0 6px 18px rgba(78,99,232,.4)}
+  box-shadow:0 0 0 2px rgba(93,224,230,.45), 0 6px 18px rgba(0,74,173,.5)}
 .brand-txt{display:flex; flex-direction:column; line-height:1.05}
 .brand-txt b{font-size:.9rem; letter-spacing:.02em; color:var(--heading)}
 .brand-txt span{font-size:.66rem; color:var(--muted); letter-spacing:.06em; text-transform:uppercase}
 
-/* RAIL APDAE */
 .rail{max-width:800px; margin:0 auto; padding:.55rem 1rem .7rem; overflow-x:auto; -webkit-overflow-scrolling:touch}
 .rail ol{display:flex; gap:.4rem; list-style:none; margin:0; padding:0; min-width:max-content}
 .stage{display:flex; align-items:center; gap:.45rem; padding:.28rem .55rem; border-radius:999px;
   background:rgba(255,255,255,.05); color:var(--muted); white-space:nowrap; border:1px solid transparent; transition:.2s}
-.stage .dot{width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-weight:700;
-  font-size:.72rem; background:rgba(255,255,255,.12); color:#fff}
+.stage .dot{width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:.72rem; background:rgba(255,255,255,.12); color:#fff}
 .stage small{font-size:.66rem; letter-spacing:.03em}
-.stage.done{color:#E7ECFF} .stage.done .dot{background:var(--grad2)}
-.stage.active{background:rgba(255,255,255,.08); color:var(--heading); border-color:rgba(165,107,224,.5)}
-.stage.active .dot{background:var(--grad1); box-shadow:0 0 0 3px rgba(165,107,224,.28)}
+.stage.done{color:#DCEBFF} .stage.done .dot{background:var(--grad)}
+.stage.active{background:rgba(255,255,255,.08); color:var(--heading); border-color:rgba(93,224,230,.45)}
+.stage.active .dot{background:var(--grad); box-shadow:0 0 0 3px rgba(93,224,230,.25)}
 
 main{max-width:800px; margin:0 auto; padding:1rem 1rem 6.8rem}
 .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)) , var(--surface);
   border:1px solid var(--line); border-radius:var(--radius); padding:1.2rem 1.1rem; margin-bottom:1rem;
-  box-shadow:0 10px 30px rgba(0,0,0,.35); position:relative; overflow:hidden}
-.card::before{content:""; position:absolute; left:0; right:0; top:0; height:2px; background:var(--grad2); opacity:.65}
+  box-shadow:0 10px 30px rgba(0,0,0,.4); position:relative; overflow:hidden}
+.card::before{content:""; position:absolute; left:0; right:0; top:0; height:2px; background:var(--grad); opacity:.8}
 .step-head{margin-bottom:.9rem}
+.hrow{display:flex; align-items:center; gap:.6rem; margin-bottom:.35rem}
+.badge{width:38px; height:38px; flex:0 0 auto; border-radius:11px; background:var(--grad-cta); display:grid; place-items:center;
+  box-shadow:0 6px 16px rgba(0,74,173,.45)}
+.badge svg{width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
 .step-head h2{font-size:1.5rem; margin:.15rem 0 .4rem}
 .lead{color:var(--muted); font-size:.95rem}
 .tool{display:inline-flex; gap:.4rem; align-items:center; font-size:.7rem; font-weight:700; letter-spacing:.02em;
-  color:#EAE6FF; background:rgba(138,123,240,.16); border:1px solid rgba(138,123,240,.4); padding:.3rem .6rem;
-  border-radius:999px; margin-bottom:.7rem}
+  color:#DDF6FA; background:rgba(93,224,230,.14); border:1px solid rgba(93,224,230,.4); padding:.3rem .6rem; border-radius:999px; margin-bottom:.7rem}
 
-/* HERO orbes */
 .hero{display:flex; justify-content:center; margin:.2rem 0 1rem}
-.hero svg{width:100%; max-width:340px; height:auto; filter:drop-shadow(0 12px 30px rgba(78,99,232,.35))}
+.hero svg{width:100%; max-width:340px; height:auto; filter:drop-shadow(0 14px 34px rgba(0,74,173,.5))}
 
 label{display:block; font-weight:600; font-size:.9rem; margin:.9rem 0 .3rem; color:var(--heading)}
 .hint{font-weight:400; color:var(--muted); font-size:.82rem}
 input[type=text], input[type=email], input[type=date], textarea, select{
-  width:100%; font:inherit; color:var(--text); background:var(--surface2);
-  border:1.5px solid var(--line); border-radius:10px; padding:.72rem .78rem}
-input::placeholder, textarea::placeholder{color:#6B7391}
+  width:100%; font:inherit; color:var(--text); background:var(--surface2); border:1.5px solid var(--line); border-radius:10px; padding:.72rem .78rem}
+input::placeholder, textarea::placeholder{color:#66748F}
 textarea{min-height:78px; resize:vertical}
 select{appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
   background-position:calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size:5px 5px,5px 5px; background-repeat:no-repeat}
-input:focus, textarea:focus, select:focus{outline:none; border-color:var(--g2a); box-shadow:0 0 0 3px rgba(138,123,240,.28)}
+input:focus, textarea:focus, select:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(93,224,230,.28)}
 .req{color:var(--bad)}
 .field-err{color:var(--bad); font-size:.8rem; margin-top:.3rem; display:none}
 .invalid input, .invalid textarea, .invalid select{border-color:var(--bad)}
@@ -144,71 +141,63 @@ input:focus, textarea:focus, select:focus{outline:none; border-color:var(--g2a);
 .scale{display:flex; gap:.35rem}
 .scale label{margin:0; flex:1}
 .scale input{position:absolute; opacity:0; pointer-events:none}
-.scale span{display:grid; place-items:center; height:40px; border:1.5px solid var(--line); border-radius:9px;
-  font-weight:700; color:var(--muted); cursor:pointer; user-select:none; background:var(--surface2)}
-.scale input:checked + span{background:var(--grad1); border-color:transparent; color:#fff}
-.scale input:focus-visible + span{box-shadow:0 0 0 3px rgba(138,123,240,.35)}
+.scale span{display:grid; place-items:center; height:40px; border:1.5px solid var(--line); border-radius:9px; font-weight:700; color:var(--muted); cursor:pointer; user-select:none; background:var(--surface2)}
+.scale input:checked + span{background:var(--grad); border-color:transparent; color:#fff}
+.scale input:focus-visible + span{box-shadow:0 0 0 3px rgba(93,224,230,.35)}
 @media(min-width:560px){ .diag-row{flex-direction:row; align-items:center} .diag-row .name{flex:1} .scale{flex:0 0 auto; width:272px} }
 
-.avg{margin-top:.85rem; padding:.85rem .95rem; border-radius:12px; background:rgba(138,123,240,.12);
-  border:1px solid rgba(138,123,240,.35); display:flex; align-items:center; gap:.85rem}
-.avg .num{font-family:"Fraunces",serif; font-size:2rem; line-height:1; background:var(--grad2);
-  -webkit-background-clip:text; background-clip:text; color:transparent}
-.avg .txt{font-size:.86rem; color:#DDE2F5}
+.avg{margin-top:.85rem; padding:.85rem .95rem; border-radius:12px; background:rgba(93,224,230,.12); border:1px solid rgba(93,224,230,.32); display:flex; align-items:center; gap:.85rem}
+.avg .num{font-family:"Fraunces",serif; font-size:2rem; line-height:1; background:var(--grad-text); -webkit-background-clip:text; background-clip:text; color:transparent}
+.avg .txt{font-size:.86rem; color:#D7E5FA}
 
 .checks{display:grid; gap:.5rem; grid-template-columns:1fr}
 @media(min-width:520px){ .checks{grid-template-columns:1fr 1fr} }
-.chk{display:flex; align-items:flex-start; gap:.55rem; padding:.62rem .72rem; border:1.5px solid var(--line);
-  border-radius:11px; cursor:pointer; background:var(--surface2)}
-.chk input{margin-top:.15rem; width:18px; height:18px; accent-color:var(--g1a); flex:0 0 auto}
+.chk{display:flex; align-items:flex-start; gap:.55rem; padding:.62rem .72rem; border:1.5px solid var(--line); border-radius:11px; cursor:pointer; background:var(--surface2)}
+.chk input{margin-top:.15rem; width:18px; height:18px; accent-color:var(--blue); flex:0 0 auto}
 .chk span{font-size:.9rem}
-.chk:has(input:checked){border-color:var(--g2a); background:rgba(138,123,240,.16)}
+.chk:has(input:checked){border-color:var(--cyan); background:rgba(93,224,230,.14)}
 
 .golden{border:1px solid var(--line); border-radius:12px; padding:.4rem .9rem .9rem; background:var(--surface2)}
-.golden .ring{font-family:"Fraunces",serif; font-size:1rem; margin-top:.8rem; background:var(--grad1);
-  -webkit-background-clip:text; background-clip:text; color:transparent}
+.golden .ring{font-family:"Fraunces",serif; font-size:1rem; margin-top:.8rem; background:var(--grad-text); -webkit-background-clip:text; background-clip:text; color:transparent}
 
 .block{border:1px solid var(--line); border-radius:12px; padding:.9rem; margin-bottom:.7rem; background:var(--surface2); position:relative}
 .block .bh{display:flex; justify-content:space-between; align-items:center; margin-bottom:.2rem}
-.block .bh b{font-size:.82rem; letter-spacing:.05em; text-transform:uppercase; color:#C9CFE8}
+.block .bh b{font-size:.82rem; letter-spacing:.05em; text-transform:uppercase; color:#BFD2EE}
 .rm{background:none; border:0; color:var(--bad); font-weight:600; font-size:.82rem; cursor:pointer; padding:.2rem}
-.add{width:100%; border:1.5px dashed rgba(138,123,240,.5); color:#CFC6FF; background:rgba(138,123,240,.08);
-  border-radius:11px; padding:.72rem; font:inherit; font-weight:600; cursor:pointer}
-.add:hover{background:rgba(138,123,240,.16)}
+.add{width:100%; border:1.5px dashed rgba(93,224,230,.5); color:#BFF0F4; background:rgba(93,224,230,.08); border-radius:11px; padding:.72rem; font:inherit; font-weight:600; cursor:pointer}
+.add:hover{background:rgba(93,224,230,.16)}
 
-blockquote{margin:1rem 0 0; padding:.75rem .95rem; border-left:3px solid transparent; border-image:var(--grad1) 1;
-  background:rgba(255,255,255,.03); color:#DCE0F2; font-style:italic; font-size:.9rem; border-radius:0 10px 10px 0}
+blockquote{margin:1rem 0 0; padding:.75rem .95rem; border-left:3px solid transparent; border-image:var(--grad) 1; background:rgba(255,255,255,.03); color:#D7E1F3; font-style:italic; font-size:.9rem; border-radius:0 10px 10px 0}
 blockquote small{display:block; font-style:normal; color:var(--muted); margin-top:.25rem}
 
-.navbar{position:fixed; left:0; right:0; bottom:0; z-index:60; background:rgba(11,12,19,.85);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-top:1px solid var(--line);
-  padding:.65rem 1rem calc(.65rem + env(safe-area-inset-bottom))}
+.navbar{position:fixed; left:0; right:0; bottom:0; z-index:60; background:rgba(10,15,30,.85); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-top:1px solid var(--line); padding:.65rem 1rem calc(.65rem + env(safe-area-inset-bottom))}
 .navbar-inner{max-width:800px; margin:0 auto; display:flex; gap:.6rem; align-items:center}
 .progress{flex:1; height:8px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; border:1px solid var(--line)}
-.progress i{display:block; height:100%; width:0; background:var(--grad1); transition:width .3s}
-.btn{font:inherit; font-weight:600; border-radius:11px; padding:.72rem 1.15rem; cursor:pointer; border:1.5px solid transparent; white-space:nowrap}
-.btn-primary{background:var(--grad1); color:#fff; box-shadow:0 8px 22px rgba(78,99,232,.4)}
-.btn-primary:hover{filter:brightness(1.06)}
+.progress i{display:block; height:100%; width:0; background:var(--grad); transition:width .3s}
+.btn{font:inherit; font-weight:600; border-radius:11px; padding:.72rem 1.15rem; cursor:pointer; border:1.5px solid transparent; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; gap:.5rem}
+.btn svg{width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.btn-primary{background:var(--grad-cta); color:#fff; box-shadow:0 8px 22px rgba(0,74,173,.5)}
+.btn-primary:hover{filter:brightness(1.07)}
 .btn-ghost{background:var(--surface2); color:var(--heading); border-color:var(--line)}
-.btn-ghost:hover{background:#262a3d}
+.btn-ghost:hover{background:#20304f}
 .btn:disabled{opacity:.55; cursor:not-allowed}
-.btn-block{width:100%; justify-content:center; text-align:center}
+.btn-block{width:100%}
 
 .status{border-radius:12px; padding:1rem; margin:.4rem 0 1rem; border:1px solid; font-size:.92rem}
-.status.info{background:rgba(138,123,240,.12); border-color:rgba(138,123,240,.4); color:#E4E1FF}
+.status.info{background:rgba(93,224,230,.1); border-color:rgba(93,224,230,.35); color:#DEF6FA}
 .status.ok{background:rgba(58,214,138,.12); border-color:rgba(58,214,138,.4); color:#BFF3D8}
 .status.err{background:rgba(255,107,107,.12); border-color:rgba(255,107,107,.4); color:#FFCDCD}
 .status b{display:block; margin-bottom:.2rem}
+.status a.mailto{display:inline-flex; margin-top:.7rem; text-decoration:none}
 .dl-row{display:grid; gap:.6rem; grid-template-columns:1fr}
 @media(min-width:520px){ .dl-row{grid-template-columns:1fr 1fr} }
-.spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:.4rem}
+.spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:.4rem}
 @keyframes sp{to{transform:rotate(360deg)}}
 
 .welcome-kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:.55rem; margin:.4rem 0 .2rem}
-.kpi{background:var(--surface2); border:1px solid var(--line); border-radius:12px; padding:.7rem; text-align:center}
-.kpi b{display:block; font-family:"Fraunces",serif; font-size:1.4rem; background:var(--grad2);
-  -webkit-background-clip:text; background-clip:text; color:transparent}
+.kpi{background:var(--surface2); border:1px solid var(--line); border-radius:12px; padding:.75rem .5rem; text-align:center}
+.kpi .ki{width:26px; height:26px; margin:0 auto .3rem; stroke:var(--cyan); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; display:block}
+.kpi b{display:block; font-family:"Fraunces",serif; font-size:1.4rem; background:var(--grad-text); -webkit-background-clip:text; background-clip:text; color:transparent}
 .kpi small{color:var(--muted); font-size:.7rem; line-height:1.2; display:block; margin-top:.15rem}
 
 footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); font-size:.78rem; text-align:center}
@@ -233,22 +222,15 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
       <div class="hero" aria-hidden="true">
         <svg viewBox="0 0 340 130" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="o1" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0" stop-color="#4E63E8"/><stop offset="1" stop-color="#C46BD6"/></linearGradient>
-            <linearGradient id="o2" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0" stop-color="#8A7BF0"/><stop offset="1" stop-color="#86D9E6"/></linearGradient>
-            <radialGradient id="o3" cx="0.4" cy="0.35" r="0.85">
-              <stop offset="0" stop-color="#7FC1DD"/><stop offset="1" stop-color="#2C5F8A"/></radialGradient>
-            <radialGradient id="sh" cx="0.35" cy="0.3" r="0.7">
-              <stop offset="0" stop-color="#ffffff" stop-opacity=".45"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+            <linearGradient id="og" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#5DE0E6"/><stop offset="1" stop-color="#004AAD"/></linearGradient>
+            <radialGradient id="sh" cx="0.34" cy="0.3" r="0.72">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".5"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
           </defs>
-          <circle cx="62" cy="65" r="50" fill="url(#o1)"/>
-          <circle cx="62" cy="65" r="50" fill="url(#sh)"/>
-          <circle cx="170" cy="65" r="50" fill="url(#o2)"/>
-          <circle cx="170" cy="65" r="50" fill="url(#sh)"/>
-          <circle cx="278" cy="65" r="46" fill="url(#o3)"/>
-          <circle cx="278" cy="65" r="46" fill="url(#sh)"/>
-          <circle cx="278" cy="65" r="49" fill="none" stroke="#A56BE0" stroke-width="4" opacity=".95"/>
+          <circle cx="62"  cy="65" r="50" fill="url(#og)"/><circle cx="62"  cy="65" r="50" fill="url(#sh)"/>
+          <circle cx="170" cy="65" r="50" fill="url(#og)"/><circle cx="170" cy="65" r="50" fill="url(#sh)"/>
+          <circle cx="278" cy="65" r="46" fill="url(#og)"/><circle cx="278" cy="65" r="46" fill="url(#sh)"/>
+          <circle cx="278" cy="65" r="49" fill="none" stroke="#5DE0E6" stroke-width="3" opacity=".9"/>
         </svg>
       </div>
       <div class="step-head">
@@ -257,15 +239,14 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
         <p class="lead">Tu plan estratégico personal rumbo a la empleabilidad 2030. Recorre las cinco etapas de la Ruta APDAE con las herramientas del seminario. Al terminar recibes tu plan en PDF y en Word, y se envía a tu docente.</p>
       </div>
       <div class="welcome-kpis">
-        <div class="kpi"><b>10</b><small>Core Skills 2030 que evalúas</small></div>
-        <div class="kpi"><b>5</b><small>etapas de la Ruta APDAE</small></div>
-        <div class="kpi"><b>2030</b><small>horizonte de empleabilidad</small></div>
+        <div class="kpi"><svg class="ki" viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9L12 3Z"/></svg><b>10</b><small>Core Skills 2030</small></div>
+        <div class="kpi"><svg class="ki" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7a3 3 0 0 0 3-3V7"/></svg><b>5</b><small>etapas Ruta APDAE</small></div>
+        <div class="kpi"><svg class="ki" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>2030</b><small>empleabilidad</small></div>
       </div>
 
       <label for="f-nombre">Nombres y apellidos <span class="req">*</span></label>
       <input type="text" id="f-nombre" name="nombre" autocomplete="name" placeholder="Ej. Ana Torres Ramírez" required>
       <div class="field-err">Escribe tu nombre completo.</div>
-
       <div class="two">
         <div>
           <label for="f-correo">Correo electrónico <span class="req">*</span> <span class="hint">recibes tu plan</span></label>
@@ -277,18 +258,16 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
           <input type="text" id="f-org" name="org" placeholder="Ej. RR. HH. - Selección">
         </div>
       </div>
-
       <label for="f-cargo">Cargo actual <span class="hint">(opcional)</span></label>
       <input type="text" id="f-cargo" name="cargo" placeholder="Ej. Analista de Talento Humano">
-
-      <blockquote>“Un hombre que no planea con anticipación siempre encontrará problemas en su puerta.”
-        <small>Confucio</small></blockquote>
+      <blockquote>“Un hombre que no planea con anticipación siempre encontrará problemas en su puerta.”<small>Confucio</small></blockquote>
     </section>
 
     <!-- STEP 1 · A -->
     <section class="card step" data-step="1" hidden>
       <div class="step-head">
-        <span class="eyebrow">A · Autoconocimiento</span>
+        <div class="hrow"><span class="badge"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <span class="eyebrow">A · Autoconocimiento</span></div>
         <h2>Diagnóstico de competencias</h2>
         <span class="tool">Herramientas · Ventana de Johari (Luft &amp; Ingham, 1955) y Core Skills 2030 (WEF, 2025)</span>
         <p class="lead">Empieza por tu área ciega: pide a alguien de confianza que te diga qué ve en ti que tú no ves. Luego evalúa tus competencias clave para 2030 pensando en tu conducta habitual. Escala: 1 muy por debajo, 3 aceptable, 5 fortaleza destacada.</p>
@@ -303,7 +282,8 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
     <!-- STEP 2 · P -->
     <section class="card step" data-step="2" hidden>
       <div class="step-head">
-        <span class="eyebrow">P · Propósito</span>
+        <div class="hrow"><span class="badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6"/></svg></span>
+          <span class="eyebrow">P · Propósito</span></div>
         <h2>Mi propósito profesional</h2>
         <span class="tool">Herramienta · Círculo Dorado (Sinek, 2009)</span>
         <p class="lead">Empieza por el centro. Primero el porqué, luego el cómo y al final el qué. Así conectas tus motivaciones con lo que haces cada día.</p>
@@ -322,14 +302,14 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
       </div>
       <label for="f-vision">Mi hoja de ruta a 2030 <span class="hint">(opcional, en tiempo presente)</span></label>
       <textarea id="f-vision" name="vision" placeholder="En 2030 soy un analista de talento que…"></textarea>
-      <blockquote>“La gente no compra lo que haces, compra por qué lo haces.”
-        <small>Simon Sinek</small></blockquote>
+      <blockquote>“La gente no compra lo que haces, compra por qué lo haces.”<small>Simon Sinek</small></blockquote>
     </section>
 
     <!-- STEP 3 · D -->
     <section class="card step" data-step="3" hidden>
       <div class="step-head">
-        <span class="eyebrow">D · Dirección</span>
+        <div class="hrow"><span class="badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M16 8l-2.5 5.5L8 16l2.5-5.5L16 8Z"/></svg></span>
+          <span class="eyebrow">D · Dirección</span></div>
         <h2>Objetivos de desarrollo</h2>
         <span class="tool">Herramienta · Objetivos SMARTER</span>
         <p class="lead">Define de 1 a 3 objetivos conectados con tus brechas del diagnóstico. Específico, medible, alcanzable, relevante, con tiempo, evaluable y revisable.</p>
@@ -341,7 +321,8 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
     <!-- STEP 4 · A -->
     <section class="card step" data-step="4" hidden>
       <div class="step-head">
-        <span class="eyebrow">A · Acción</span>
+        <div class="hrow"><span class="badge"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span class="eyebrow">A · Acción</span></div>
         <h2>Plan de acción y hábitos</h2>
         <span class="tool">Herramienta · Matriz de Eisenhower (Covey, 1989)</span>
         <p class="lead">Clasifica cada acción según urgencia e importancia. Lo importante y no urgente es donde se construye tu desarrollo.</p>
@@ -349,17 +330,16 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
       <label>Mis acciones</label>
       <div id="acciones"></div>
       <button type="button" class="add" id="addAccion">+ Agregar acción</button>
-      <label style="margin-top:1.2rem">Hábitos de alto rendimiento y bienestar
-        <span class="hint">elige pocos y consolídalos (Sesión 2)</span></label>
+      <label style="margin-top:1.2rem">Hábitos de alto rendimiento y bienestar <span class="hint">elige pocos y consolídalos (Sesión 2)</span></label>
       <div class="checks" id="habitos"></div>
-      <blockquote>“Lo que es urgente rara vez es importante y lo que es importante rara vez es urgente.”
-        <small>Dwight D. Eisenhower</small></blockquote>
+      <blockquote>“Lo que es urgente rara vez es importante y lo que es importante rara vez es urgente.”<small>Dwight D. Eisenhower</small></blockquote>
     </section>
 
     <!-- STEP 5 · E -->
     <section class="card step" data-step="5" hidden>
       <div class="step-head">
-        <span class="eyebrow">E · Evolución</span>
+        <div class="hrow"><span class="badge"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></span>
+          <span class="eyebrow">E · Evolución</span></div>
         <h2>Autogestión y compromiso</h2>
         <span class="tool">Herramienta · Inteligencia Emocional (Goleman, 2005)</span>
         <p class="lead">La autogestión emocional sostiene tus decisiones bajo presión. Cierra con un compromiso que revisarás cada mes.</p>
@@ -374,21 +354,19 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
       <label for="f-conversacion">Una conversación pendiente que asumiré</label>
       <input type="text" id="f-conversacion" name="conversacion" placeholder="Ej. feedback de desarrollo con…">
       <div class="two">
-        <div><label for="f-compEquipo">Un compromiso con mi equipo</label>
-          <input type="text" id="f-compEquipo" name="compEquipo" placeholder="Ej. feedback quincenal"></div>
-        <div><label for="f-compProposito">Un compromiso con mi propósito</label>
-          <input type="text" id="f-compProposito" name="compProposito" placeholder="Ej. certificarme en people analytics"></div>
+        <div><label for="f-compEquipo">Un compromiso con mi equipo</label><input type="text" id="f-compEquipo" name="compEquipo" placeholder="Ej. feedback quincenal"></div>
+        <div><label for="f-compProposito">Un compromiso con mi propósito</label><input type="text" id="f-compProposito" name="compProposito" placeholder="Ej. certificarme en people analytics"></div>
       </div>
       <label for="f-revision">Cómo daré seguimiento cada mes <span class="hint">semáforo: verde, amarillo, rojo</span></label>
       <textarea id="f-revision" name="revision" placeholder="Reviso el primer lunes de cada mes con el semáforo…"></textarea>
-      <blockquote>“Los pensamientos son el lenguaje del cerebro y los sentimientos el lenguaje del cuerpo.”
-        <small>Joe Dispenza</small></blockquote>
+      <blockquote>“Los pensamientos son el lenguaje del cerebro y los sentimientos el lenguaje del cuerpo.”<small>Joe Dispenza</small></blockquote>
     </section>
 
     <!-- STEP 6 -->
     <section class="card step" data-step="6" hidden>
       <div class="step-head">
-        <span class="eyebrow">Cierre</span>
+        <div class="hrow"><span class="badge"><svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg></span>
+          <span class="eyebrow">Cierre</span></div>
         <h2>Tu plan está listo</h2>
         <p class="lead">Genera tu documento y envíalo. Tu plan se descarga en tu dispositivo y llega a tu docente.</p>
       </div>
@@ -396,10 +374,11 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
         <b>Antes de enviar</b>
         Al presionar el botón, tu plan se descarga en PDF y se envía a tu docente. Revisa también tu carpeta de spam por si acaso.
       </div>
-      <button type="button" class="btn btn-primary btn-block" id="btnSend">Generar y enviar mi plan</button>
+      <button type="button" class="btn btn-primary btn-block" id="btnSend">
+        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>Generar y enviar mi plan</button>
       <div class="dl-row" style="margin-top:.8rem">
-        <button type="button" class="btn btn-ghost btn-block" id="btnPdf">Descargar PDF</button>
-        <button type="button" class="btn btn-ghost btn-block" id="btnWord">Descargar Word</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnPdf"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>Descargar PDF</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnWord"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>Descargar Word</button>
       </div>
       <blockquote>“Cae siete veces, levántate ocho.”<small>Proverbio japonés</small></blockquote>
     </section>
@@ -418,14 +397,9 @@ footer{max-width:800px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
 
 <script>
 /* ===== CONTENIDO ===== */
-const COMPETENCIAS=["Pensamiento analítico","Pensamiento creativo","Resiliencia, flexibilidad y agilidad",
-"Curiosidad y aprendizaje continuo","Motivación y autoconocimiento","Empatía y escucha activa",
-"Liderazgo e influencia social","Gestión del talento","Alfabetización tecnológica e IA","Pensamiento sistémico"];
-const HABITOS=["Respiración consciente (box breathing, 5 min)","Bloques de foco sin interrupciones",
-"Priorización con matriz de Eisenhower","Pausas activas durante la jornada","Higiene del sueño",
-"Aprendizaje continuo (30 min al día)","Registro de logros diarios","Desconexión digital","Actividad física","Reflexión y gratitud"];
-const CUADRANTES=[{v:"Hacer",t:"Hacer · urgente e importante"},{v:"Programar",t:"Programar · importante, no urgente"},
-{v:"Delegar",t:"Delegar · urgente, no importante"},{v:"Eliminar",t:"Eliminar · ni urgente ni importante"}];
+const COMPETENCIAS=["Pensamiento analítico","Pensamiento creativo","Resiliencia, flexibilidad y agilidad","Curiosidad y aprendizaje continuo","Motivación y autoconocimiento","Empatía y escucha activa","Liderazgo e influencia social","Gestión del talento","Alfabetización tecnológica e IA","Pensamiento sistémico"];
+const HABITOS=["Respiración consciente (box breathing, 5 min)","Bloques de foco sin interrupciones","Priorización con matriz de Eisenhower","Pausas activas durante la jornada","Higiene del sueño","Aprendizaje continuo (30 min al día)","Registro de logros diarios","Desconexión digital","Actividad física","Reflexión y gratitud"];
+const CUADRANTES=[{v:"Hacer",t:"Hacer · urgente e importante"},{v:"Programar",t:"Programar · importante, no urgente"},{v:"Delegar",t:"Delegar · urgente, no importante"},{v:"Eliminar",t:"Eliminar · ni urgente ni importante"}];
 
 /* ===== NAV ===== */
 const STAGES=[{k:"A",t:"Autoconocimiento"},{k:"P",t:"Propósito"},{k:"D",t:"Dirección"},{k:"A",t:"Acción"},{k:"E",t:"Evolución"}];
@@ -438,7 +412,7 @@ function showStep(n){ current=Math.max(0,Math.min(TOTAL_STEPS-1,n));
   $$(".step").forEach(s=>{ s.hidden=(+s.dataset.step!==current); });
   $("#bar").style.width=(current/(TOTAL_STEPS-1)*100)+"%";
   $("#btnPrev").style.visibility=current===0?"hidden":"visible";
-  const nx=$("#btnNext"); nx.textContent=current===TOTAL_STEPS-2?"Revisar":"Siguiente"; nx.style.display=current===TOTAL_STEPS-1?"none":"inline-block";
+  const nx=$("#btnNext"); nx.textContent=current===TOTAL_STEPS-2?"Revisar":"Siguiente"; nx.style.display=current===TOTAL_STEPS-1?"none":"inline-flex";
   renderRail(); window.scrollTo({top:0,behavior:"smooth"}); saveDraft(); }
 
 /* ===== CAMPOS DINÁMICOS ===== */
@@ -451,8 +425,7 @@ function updateAvg(){ let s=0,c=0; COMPETENCIAS.forEach((_,i)=>{ const x=$(`inpu
   const box=$("#avg"); if(!c){box.hidden=true;return;} const a=s/c; box.hidden=false; $("#avgNum").textContent=a.toFixed(2);
   const msg=a>=4?"Perfil consolidado. Profundiza tus fortalezas y comparte con otros.":a>=3?"Base sólida con oportunidades claras. Prioriza dos o tres competencias.":"Define pocas prioridades y hábitos frecuentes antes de abarcar más.";
   $("#avgTxt").innerHTML=`<b>Promedio de ${c}/${COMPETENCIAS.length} competencias.</b> ${msg}`; }
-function renderChecks(id,arr,name){ const box=$(id); box.innerHTML=""; arr.forEach(v=>{ const l=document.createElement("label"); l.className="chk";
-  l.innerHTML=`<input type="checkbox" name="${name}" value="${v}"><span>${v}</span>`; box.appendChild(l); }); }
+function renderChecks(id,arr,name){ const box=$(id); box.innerHTML=""; arr.forEach(v=>{ const l=document.createElement("label"); l.className="chk"; l.innerHTML=`<input type="checkbox" name="${name}" value="${v}"><span>${v}</span>`; box.appendChild(l); }); }
 let objCount=0,accCount=0;
 function addObjetivo(){ if(objCount>=3)return; objCount++; const w=document.createElement("div"); w.className="block";
   w.innerHTML=`<div class="bh"><b>Objetivo ${objCount}</b>${objCount>1?'<button type="button" class="rm">Quitar</button>':''}</div>
@@ -484,10 +457,9 @@ function validateStep(n){ let ok=true; const need=[];
   need.forEach(([el,t])=>{const g=t(el.value);el.parentElement.classList.toggle("invalid",!g);if(!g)ok=false;}); return ok; }
 
 /* ===== RECOLECCIÓN ===== */
-function collect(){ const d={nombre:$("#f-nombre").value.trim(),correo:$("#f-correo").value.trim(),org:$("#f-org").value.trim(),
-  cargo:$("#f-cargo").value.trim(),johari:$("#f-johari").value.trim(),porque:$("#f-porque").value.trim(),
-  como:$("#f-como").value.trim(),que:$("#f-que").value.trim(),vision:$("#f-vision").value.trim(),emocion:$("#f-emocion").value.trim(),
-  fortalecer:$("#f-fortalecer").value.trim(),dejar:$("#f-dejar").value.trim(),conversacion:$("#f-conversacion").value.trim(),
+function collect(){ const d={nombre:$("#f-nombre").value.trim(),correo:$("#f-correo").value.trim(),org:$("#f-org").value.trim(),cargo:$("#f-cargo").value.trim(),
+  johari:$("#f-johari").value.trim(),porque:$("#f-porque").value.trim(),como:$("#f-como").value.trim(),que:$("#f-que").value.trim(),vision:$("#f-vision").value.trim(),
+  emocion:$("#f-emocion").value.trim(),fortalecer:$("#f-fortalecer").value.trim(),dejar:$("#f-dejar").value.trim(),conversacion:$("#f-conversacion").value.trim(),
   compEquipo:$("#f-compEquipo").value.trim(),compProposito:$("#f-compProposito").value.trim(),revision:$("#f-revision").value.trim(),
   diag:[],avg:null,habitos:$$('input[name="habitos"]:checked').map(i=>i.value),objetivos:[],acciones:[]};
   let s=0,c=0; COMPETENCIAS.forEach((name,i)=>{const x=$(`input[name="diag${i}"]:checked`);const val=x?+x.value:null;d.diag.push({name,val});if(val){s+=val;c++;}});
@@ -533,29 +505,28 @@ function buildHTML(d){
 }
 const DOC_CSS=`
   .doc{font-family:Georgia,'Times New Roman',serif;color:#0B1D33;padding:34px 44px 40px;width:794px;background:#fff}
-  .grad-bar{height:8px;border-radius:4px;background:linear-gradient(135deg,#4E63E8,#C46BD6 45%,#86D9E6);margin-bottom:14px}
+  .grad-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,#5DE0E6,#004AAD);margin-bottom:14px}
   .doc-head{display:flex;align-items:center;gap:12px;border-bottom:2px solid #E3E9F3;padding-bottom:10px;margin-bottom:16px}
-  .dm{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4E63E8,#C46BD6);color:#fff;display:grid;place-items:center;font-weight:700;font-family:Georgia,serif}
-  .dh1{font-weight:700;color:#00274D;font-size:14px}
+  .dm{width:36px;height:36px;border-radius:50%;background:linear-gradient(90deg,#5DE0E6,#004AAD);color:#fff;display:grid;place-items:center;font-weight:700;font-family:Georgia,serif}
+  .dh1{font-weight:700;color:#00337A;font-size:14px}
   .dh2{font-size:11px;color:#5A6B7C;text-transform:uppercase;letter-spacing:.06em}
-  .doc h1{font-size:24px;color:#00274D;margin:0 0 2px}
-  .doc .sub{font-size:12px;color:#6A4EC0;margin:0 0 12px;font-style:italic}
-  .doc h2{font-size:15px;color:#0B5FA5;margin:22px 0 2px;border-bottom:1px solid #D3E0EC;padding-bottom:4px}
-  .doc .tag{font-size:10.5px;color:#8A7BF0;margin:2px 0 8px;text-transform:uppercase;letter-spacing:.04em;font-weight:bold}
+  .doc h1{font-size:24px;color:#00337A;margin:0 0 2px}
+  .doc .sub{font-size:12px;color:#0068B3;margin:0 0 12px;font-style:italic}
+  .doc h2{font-size:15px;color:#004AAD;margin:22px 0 2px;border-bottom:1px solid #D3E0EC;padding-bottom:4px}
+  .doc .tag{font-size:10.5px;color:#0086A8;margin:2px 0 8px;text-transform:uppercase;letter-spacing:.04em;font-weight:bold}
   .doc p{font-size:12.5px;line-height:1.5;margin:0 0 7px}
   .doc table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:11.5px}
   .doc th,.doc td{border:1px solid #C9D8E6;padding:5px 7px;text-align:left;vertical-align:top}
-  .doc th{background:#EEF3F9;color:#00274D}
+  .doc th{background:#E9F6F9;color:#00337A}
   .doc table.meta,.doc table.meta td{border:0;font-size:12px;padding:2px 0;width:50%}
   .doc ul{margin:2px 0 8px 18px;padding:0;font-size:12.5px}
-  .doc .res{background:#EDEAFB;border-left:3px solid #8A7BF0;padding:7px 10px;font-size:12.5px}
+  .doc .res{background:#E4F6F8;border-left:3px solid #5DE0E6;padding:7px 10px;font-size:12.5px}
   .doc .firma{margin-top:30px;display:flex;gap:12px;align-items:flex-end}
   .doc .firma .fl{width:200px;border-bottom:1px solid #0B1D33;height:1px;margin-bottom:20px}
   .doc .foot{margin-top:22px;text-align:center;color:#5A6B7C;font-size:10.5px;border-top:1px solid #D3E0EC;padding-top:8px}
 `;
 function buildText(d){ const L=[];
-  L.push("PLAN DE DESARROLLO DE COMPETENCIAS");L.push("CENTRUM PUCP - Seminario de Competencias (Empleabilidad 2030)");
-  L.push("Especializacion en Analista de Gestion del Talento Humano");L.push("=".repeat(56));
+  L.push("PLAN DE DESARROLLO DE COMPETENCIAS");L.push("CENTRUM PUCP - Seminario de Competencias (Empleabilidad 2030)");L.push("Especializacion en Analista de Gestion del Talento Humano");L.push("=".repeat(56));
   L.push(`Participante: ${d.nombre}`);L.push(`Correo: ${d.correo}`);if(d.cargo)L.push(`Cargo: ${d.cargo}`);if(d.org)L.push(`Organizacion: ${d.org}`);L.push(`Fecha: ${d.fecha}`);L.push("");
   L.push("1. AUTOCONOCIMIENTO (Johari + Core Skills 2030)");if(d.johari)L.push(`   Area ciega: ${d.johari}`);
   d.diag.forEach(x=>L.push(`   - ${x.name}: ${x.val ?? "-"}`));if(d.avg!=null)L.push(`   Promedio: ${d.avg.toFixed(2)}. ${interp(d.avg)}`);L.push("");
@@ -570,22 +541,17 @@ function buildText(d){ const L=[];
 /* ===== DESCARGAS (PDF corregido) ===== */
 function fileName(d,ext){ const s=(d.nombre||"participante").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g,"_").replace(/^_|_$/g,""); return `Plan_Competencias_${s}.${ext}`; }
 async function downloadPDF(d){
-  // Esperar a que las fuentes estén listas evita capturas en blanco
   try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
-  // Contenedor real dentro del DOM (no fuera de pantalla): así html2canvas SÍ pinta
-  const holder=document.createElement("div");
-  holder.setAttribute("aria-hidden","true");
+  const holder=document.createElement("div"); holder.setAttribute("aria-hidden","true");
   holder.style.cssText="position:absolute;left:0;top:0;z-index:-1;width:794px;background:#ffffff";
   holder.innerHTML=`<style>${DOC_CSS}</style>`+buildHTML(d);
   document.body.appendChild(holder);
   const target=holder.querySelector(".doc");
-  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))); // dejar pintar
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
   try{
-    await html2pdf().set({
-      margin:0, filename:fileName(d,"pdf"), image:{type:"jpeg",quality:.98},
+    await html2pdf().set({ margin:0, filename:fileName(d,"pdf"), image:{type:"jpeg",quality:.98},
       html2canvas:{scale:2, backgroundColor:"#ffffff", useCORS:true, windowWidth:794, scrollX:0, scrollY:0},
-      jsPDF:{unit:"pt",format:"a4",orientation:"portrait"}, pagebreak:{mode:["css","legacy"]}
-    }).from(target).save();
+      jsPDF:{unit:"pt",format:"a4",orientation:"portrait"}, pagebreak:{mode:["css","legacy"]} }).from(target).save();
   } finally { holder.remove(); }
 }
 function downloadWord(d){
@@ -599,42 +565,26 @@ function downloadWord(d){
 /* ===== ENVÍO ===== */
 let emailjsReady=false;
 function initEmail(){ const c=CONFIG.emailjs;
-  if(c.publicKey&&c.serviceId&&c.templateId&&typeof emailjs!=="undefined"){ try{emailjs.init({publicKey:c.publicKey});emailjsReady=true;}catch(e){emailjsReady=false;} }
-  else emailjsReady=false; }
-
+  if(c.publicKey&&c.serviceId&&c.templateId&&typeof emailjs!=="undefined"){ try{emailjs.init({publicKey:c.publicKey});emailjsReady=true;}catch(e){emailjsReady=false;} } else emailjsReady=false; }
+function mailtoLink(d){ const to=CONFIG.formsubmitEmail||"amador.rivera@pucp.edu.pe";
+  const sub=encodeURIComponent(`Plan de Competencias - ${d.nombre}`);
+  const body=encodeURIComponent(buildText(d).slice(0,1600)+"\n\n(Adjunta también tu PDF descargado.)");
+  return `mailto:${to}?subject=${sub}&body=${body}`; }
 async function sendToDocente(d){
-  const base={ participante:d.nombre, correo_alumno:d.correo, cargo:d.cargo||"-", organizacion:d.org||"-",
-    promedio:d.avg!=null?d.avg.toFixed(2):"-", plan_texto:buildText(d), plan_html:buildHTML(d) };
-  // 1) Webhook n8n
-  if(CONFIG.webhookUrl){
-    const r=await fetch(CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(base)});
-    if(!r.ok) throw new Error("Webhook n8n HTTP "+r.status); return "n8n";
-  }
-  // 2) Web3Forms
-  if(CONFIG.web3formsKey){
-    const r=await fetch("https://api.web3forms.com/submit",{method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({access_key:CONFIG.web3formsKey, subject:`Plan de Competencias - ${d.nombre}`,
-        from_name:"Seminario de Competencias CENTRUM", email:d.correo,
+  const base={ participante:d.nombre, correo_alumno:d.correo, cargo:d.cargo||"-", organizacion:d.org||"-", promedio:d.avg!=null?d.avg.toFixed(2):"-", plan_texto:buildText(d), plan_html:buildHTML(d) };
+  if(CONFIG.webhookUrl){ const r=await fetch(CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(base)}); if(!r.ok) throw new Error("Webhook n8n HTTP "+r.status); return "n8n"; }
+  if(CONFIG.web3formsKey){ const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({access_key:CONFIG.web3formsKey, subject:`Plan de Competencias - ${d.nombre}`, from_name:"Seminario de Competencias CENTRUM", email:d.correo,
         Participante:d.nombre, Cargo:d.cargo||"-", Organizacion:d.org||"-", Promedio:base.promedio, message:base.plan_texto})});
-    const j=await r.json().catch(()=>({})); if(!(j&&j.success)) throw new Error((j&&j.message)||"Web3Forms no confirmó."); return "web3forms";
-  }
-  // 3) FormSubmit (respaldo)
-  if(CONFIG.formsubmitEmail){
-    const r=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(CONFIG.formsubmitEmail),{method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({_subject:`Plan de Competencias - ${d.nombre}`,_template:"table",
-        Participante:d.nombre, "Correo del alumno":d.correo, Cargo:d.cargo||"-", Organizacion:d.org||"-",
-        "Promedio Core Skills 2030":base.promedio, "Plan completo":base.plan_texto, email:d.correo})});
+    const j=await r.json().catch(()=>({})); if(!(j&&j.success)) throw new Error((j&&j.message)||"Web3Forms no confirmó."); return "web3forms"; }
+  if(CONFIG.formsubmitEmail){ const r=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(CONFIG.formsubmitEmail),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({_subject:`Plan de Competencias - ${d.nombre}`,_template:"table", Participante:d.nombre, "Correo del alumno":d.correo, Cargo:d.cargo||"-", Organizacion:d.org||"-", "Promedio Core Skills 2030":base.promedio, "Plan completo":base.plan_texto, email:d.correo})});
     if(!r.ok) throw new Error("FormSubmit HTTP "+r.status);
-    const j=await r.json().catch(()=>({})); const ok=j.success===true||j.success==="true";
-    if(!ok) throw new Error((j&&j.message)||"FormSubmit requiere activación (revisa tu correo)."); return "formsubmit";
-  }
-  throw new Error("No configuraste ningún canal (webhookUrl, web3formsKey o formsubmitEmail).");
+    const j=await r.json().catch(()=>({})); const ok=j.success===true||j.success==="true"; if(!ok) throw new Error((j&&j.message)||"FormSubmit requiere activación (revisa spam)."); return "formsubmit"; }
+  throw new Error("Sin canal configurado. Usa el botón para enviar desde tu correo.");
 }
 async function sendToAlumno(d){ if(!emailjsReady) return {skipped:true};
-  await emailjs.send(CONFIG.emailjs.serviceId,CONFIG.emailjs.templateId,{to_email:d.correo,to_name:d.nombre,reply_to:d.correo,mensaje:buildText(d)});
-  return {sent:true}; }
+  await emailjs.send(CONFIG.emailjs.serviceId,CONFIG.emailjs.templateId,{to_email:d.correo,to_name:d.nombre,reply_to:d.correo,mensaje:buildText(d)}); return {sent:true}; }
 
 /* ===== FLUJO FINAL ===== */
 function setStatus(k,t,m){ const b=$("#statusBox"); b.className="status "+k; b.innerHTML=`<b>${t}</b>${m}`; }
@@ -642,29 +592,26 @@ async function generateAndSend(){
   for(const s of [0,2,5]){ if(!validateStep(s)){ showStep(s); return; } }
   const d=collect(); const btn=$("#btnSend"); btn.disabled=true;
   setStatus("info",`<span class="spin"></span>Generando y enviando…`,`Preparamos tu PDF y enviamos el plan a tu docente.`);
-  downloadPDF(d).catch(()=>{}); // descarga garantizada, en paralelo
+  downloadPDF(d).catch(()=>{});
   let docenteOk=false,docenteErr="",alumno={skipped:true};
   try{ await sendToDocente(d); docenteOk=true; }catch(e){ docenteErr=(e&&e.message)||"Error de red."; }
   try{ alumno=await sendToAlumno(d); }catch(e){ alumno={error:(e&&(e.text||e.message))||"Error de EmailJS."}; }
   if(docenteOk){
-    const extra=alumno.sent?` También enviamos una copia a <b>${esc(d.correo)}</b> (revisa spam).`
-      :alumno.error?` La copia al correo del alumno no salió esta vez, pero tu docente ya lo recibió.`:"";
+    const extra=alumno.sent?` También enviamos una copia a <b>${esc(d.correo)}</b> (revisa spam).`:alumno.error?` La copia al correo del alumno no salió esta vez, pero tu docente ya lo recibió.`:"";
     setStatus("ok","Listo. Tu plan fue enviado",`Tu plan llegó a tu docente y se descargó en tu dispositivo.${extra}`);
   } else {
-    const extra=alumno.sent?" Aun así, enviamos una copia a tu correo.":"";
-    setStatus("err","No se pudo enviar al docente",`Tu plan sí se descargó en este dispositivo, úsalo con los botones de abajo.${extra} Detalle: ${esc(docenteErr)}`);
+    setStatus("err","No se pudo enviar automáticamente",
+      `Tu plan sí se descargó en este dispositivo. Puedes enviarlo tú con el botón de abajo, o pídele al docente que configure el puente. Detalle: ${esc(docenteErr)}
+       <a class="mailto btn btn-primary" href="${mailtoLink(d)}">Enviar por mi correo</a>`);
   }
   btn.disabled=false;
 }
 
 /* ===== BORRADOR ===== */
-const DRAFT_KEY="seminario_competencias_centrum_v3";
+const DRAFT_KEY="seminario_competencias_centrum_v4";
 function saveDraft(){ try{ const data={};
-  $$("#wizard input, #wizard textarea, #wizard select").forEach(el=>{
-    if(el.type==="radio"||el.type==="checkbox"){ if(el.checked)(data[el.name]=data[el.name]||[]).push(el.value); }
-    else if(el.id){ data[el.id]=el.value; } });
-  data.__objCount=objCount; data.__accCount=accCount; data.__step=current;
-  localStorage.setItem(DRAFT_KEY,JSON.stringify(data)); }catch(e){} }
+  $$("#wizard input, #wizard textarea, #wizard select").forEach(el=>{ if(el.type==="radio"||el.type==="checkbox"){ if(el.checked)(data[el.name]=data[el.name]||[]).push(el.value); } else if(el.id){ data[el.id]=el.value; } });
+  data.__objCount=objCount; data.__accCount=accCount; data.__step=current; localStorage.setItem(DRAFT_KEY,JSON.stringify(data)); }catch(e){} }
 function loadDraft(){ try{ const raw=localStorage.getItem(DRAFT_KEY); if(!raw)return; const data=JSON.parse(raw);
   while(objCount<(data.__objCount||1))addObjetivo(); while(accCount<(data.__accCount||1))addAccion();
   Object.keys(data).forEach(k=>{ if(k.startsWith("__"))return; const el=document.getElementById(k); if(el&&typeof data[k]==="string")el.value=data[k]; });
