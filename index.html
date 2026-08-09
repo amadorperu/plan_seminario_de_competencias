@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Seminario de Competencias · Plan de Desarrollo · CENTRUM PUCP</title>
+<meta name="description" content="Plan de Desarrollo de Competencias para la Especialización en Analista de Gestión del Talento Humano. CENTRUM PUCP Business School." />
+
+<!--
+======================================================================
+  CONFIGURACIÓN DEL CORREO (EmailJS)  ·  LÉEME ANTES DE PUBLICAR
+======================================================================
+  El envío del correo es lo más importante. Este bloque es lo único
+  que debes editar. En otras ocasiones "no se envía nada" porque las
+  tres claves de EmailJS no están puestas o el template no tiene el
+  campo "To Email" configurado. Sigue estos pasos una sola vez:
+
+  1) Crea una cuenta gratuita en https://www.emailjs.com
+  2) Email Services  ->  Add New Service (Gmail u Outlook con tu correo
+     institucional). Copia el Service ID.
+  3) Email Templates ->  Create New Template. En la pestaña "Settings"
+     del template escribe EXACTAMENTE estos valores en cada campo:
+        To Email   :  {{to_email}}
+        From Name  :  Seminario de Competencias CENTRUM PUCP
+        Reply To   :  {{reply_to}}
+        Cc         :  {{cc_email}}
+        Subject    :  Tu Plan de Desarrollo de Competencias - {{to_name}}
+     En el "Content" del template pon solo:  {{mensaje}}
+     (deja el contenido como "text", no hace falta HTML).
+     Guarda y copia el Template ID.
+  4) Account -> General -> copia tu Public Key.
+  5) Pega los tres valores abajo, entre comillas, y sube el archivo.
+
+  Prueba: completa el seminario con TU propio correo y revisa bandeja
+  de entrada y spam. Si algo falla, la pantalla final te dirá el error.
+======================================================================
+-->
+<script>
+  const EMAILJS_CONFIG = {
+    publicKey:  "PEGA_AQUI_TU_PUBLIC_KEY",
+    serviceId:  "PEGA_AQUI_TU_SERVICE_ID",
+    templateId: "PEGA_AQUI_TU_TEMPLATE_ID",
+    // Copia oculta que llega al docente en cada envío. Déjalo o cámbialo.
+    copiaDocente: "amador.rivera@pucp.edu.pe"
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Librerías cargadas desde CDN (funcionan en GitHub Pages) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+:root{
+  --ink:#0B1D33; --navy:#00274D; --blue:#0B5FA5; --celeste:#2E86C1;
+  --celeste-soft:#DCEBF7; --paper:#EEF3F9; --card:#FFFFFF; --line:#D3E0EC;
+  --muted:#5A6B7C; --gold:#B08D3E; --ok:#1E8E4E; --warn:#C9820A; --bad:#C0392B;
+  --shadow:0 1px 2px rgba(0,39,77,.06), 0 8px 24px rgba(0,39,77,.08);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif; font-weight:600; line-height:1.15; color:var(--navy); margin:0}
+p{margin:0 0 .8rem}
+a{color:var(--blue)}
+.eyebrow{font-family:"Inter",sans-serif; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; font-size:.68rem; color:var(--celeste)}
+
+/* ---------- HEADER ---------- */
+header{background:var(--navy); color:#fff; position:sticky; top:0; z-index:50;
+  border-bottom:3px solid var(--gold)}
+.head-inner{max-width:780px; margin:0 auto; padding:.7rem 1rem;
+  display:flex; align-items:center; gap:.7rem}
+.brand-mark{width:34px; height:34px; border-radius:8px; flex:0 0 auto;
+  background:linear-gradient(135deg,var(--celeste),var(--blue));
+  display:grid; place-items:center; font-family:"Fraunces",serif; font-weight:600;
+  color:#fff; font-size:1.05rem; box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.brand-txt{display:flex; flex-direction:column; line-height:1.05}
+.brand-txt b{font-size:.9rem; letter-spacing:.02em}
+.brand-txt span{font-size:.66rem; color:#B9D2E8; letter-spacing:.06em; text-transform:uppercase}
+
+/* ---------- APDAE RAIL ---------- */
+.rail{max-width:780px; margin:0 auto; padding:.55rem 1rem .7rem; overflow-x:auto;
+  -webkit-overflow-scrolling:touch}
+.rail ol{display:flex; gap:.4rem; list-style:none; margin:0; padding:0; min-width:max-content}
+.rail li{display:flex; align-items:center; gap:.4rem}
+.stage{display:flex; align-items:center; gap:.45rem; padding:.28rem .5rem; border-radius:999px;
+  background:rgba(255,255,255,.08); color:#C7DBEC; white-space:nowrap; transition:.2s}
+.stage .dot{width:22px; height:22px; border-radius:50%; display:grid; place-items:center;
+  font-weight:700; font-size:.72rem; background:rgba(255,255,255,.16); color:#fff}
+.stage small{font-size:.66rem; letter-spacing:.03em}
+.stage.done{background:rgba(46,134,193,.22); color:#EAF4FC}
+.stage.done .dot{background:var(--celeste)}
+.stage.active{background:#fff; color:var(--navy)}
+.stage.active .dot{background:var(--gold); color:#fff}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:780px; margin:0 auto; padding:1rem 1rem 6.5rem}
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:1.15rem 1.05rem; margin-bottom:1rem}
+.step-head{margin-bottom:.9rem}
+.step-head h2{font-size:1.45rem; margin:.15rem 0 .35rem}
+.lead{color:var(--muted); font-size:.95rem}
+
+/* ---------- FORM ---------- */
+label{display:block; font-weight:600; font-size:.9rem; margin:.9rem 0 .3rem; color:var(--navy)}
+.hint{font-weight:400; color:var(--muted); font-size:.82rem}
+input[type=text], input[type=email], input[type=date], textarea, select{
+  width:100%; font:inherit; color:var(--ink); background:#fff;
+  border:1.5px solid var(--line); border-radius:10px; padding:.7rem .75rem}
+textarea{min-height:80px; resize:vertical}
+input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celeste);
+  box-shadow:0 0 0 3px var(--celeste-soft)}
+.req{color:var(--bad)}
+.field-err{color:var(--bad); font-size:.8rem; margin-top:.3rem; display:none}
+.invalid input, .invalid textarea, .invalid select{border-color:var(--bad)}
+.invalid .field-err{display:block}
+.two{display:grid; gap:.6rem}
+@media(min-width:560px){ .two{grid-template-columns:1fr 1fr} }
+
+/* diagnostic rows */
+.diag{border:1px solid var(--line); border-radius:10px; overflow:hidden}
+.diag-row{display:flex; flex-direction:column; gap:.45rem; padding:.7rem .8rem;
+  border-bottom:1px solid var(--line)}
+.diag-row:last-child{border-bottom:0}
+.diag-row .name{font-weight:600; font-size:.92rem; color:var(--navy)}
+.scale{display:flex; gap:.35rem}
+.scale label{margin:0; flex:1}
+.scale input{position:absolute; opacity:0; pointer-events:none}
+.scale span{display:grid; place-items:center; height:40px; border:1.5px solid var(--line);
+  border-radius:9px; font-weight:700; color:var(--muted); cursor:pointer; user-select:none}
+.scale input:checked + span{background:var(--navy); border-color:var(--navy); color:#fff}
+.scale input:focus-visible + span{box-shadow:0 0 0 3px var(--celeste-soft)}
+@media(min-width:560px){ .diag-row{flex-direction:row; align-items:center}
+  .diag-row .name{flex:1} .scale{flex:0 0 auto; width:270px} }
+
+.avg{margin-top:.85rem; padding:.8rem .9rem; border-radius:10px; background:var(--celeste-soft);
+  border:1px solid #BFD9EF; display:flex; align-items:center; gap:.8rem}
+.avg .num{font-family:"Fraunces",serif; font-size:1.9rem; color:var(--navy); line-height:1}
+.avg .txt{font-size:.86rem; color:var(--navy)}
+
+/* checkbox grid */
+.checks{display:grid; gap:.5rem; grid-template-columns:1fr}
+@media(min-width:520px){ .checks{grid-template-columns:1fr 1fr} }
+.chk{display:flex; align-items:flex-start; gap:.55rem; padding:.6rem .7rem; border:1.5px solid var(--line);
+  border-radius:10px; cursor:pointer; background:#fff}
+.chk input{margin-top:.15rem; width:18px; height:18px; accent-color:var(--blue); flex:0 0 auto}
+.chk span{font-size:.9rem}
+.chk:has(input:checked){border-color:var(--celeste); background:var(--celeste-soft)}
+
+/* repeatable blocks */
+.block{border:1px solid var(--line); border-radius:12px; padding:.85rem; margin-bottom:.7rem;
+  background:#FAFCFE; position:relative}
+.block .bh{display:flex; justify-content:space-between; align-items:center; margin-bottom:.2rem}
+.block .bh b{font-size:.82rem; letter-spacing:.05em; text-transform:uppercase; color:var(--celeste)}
+.rm{background:none; border:0; color:var(--bad); font-weight:600; font-size:.82rem; cursor:pointer; padding:.2rem}
+.add{width:100%; border:1.5px dashed var(--celeste); color:var(--blue); background:#fff;
+  border-radius:10px; padding:.7rem; font:inherit; font-weight:600; cursor:pointer}
+.add:hover{background:var(--celeste-soft)}
+
+blockquote{margin:1rem 0 0; padding:.7rem .9rem; border-left:3px solid var(--gold);
+  background:#FBF8F1; color:var(--navy); font-style:italic; font-size:.9rem; border-radius:0 8px 8px 0}
+blockquote small{display:block; font-style:normal; color:var(--muted); margin-top:.25rem}
+
+/* ---------- NAV BAR ---------- */
+.navbar{position:fixed; left:0; right:0; bottom:0; z-index:60; background:#fff;
+  border-top:1px solid var(--line); box-shadow:0 -6px 18px rgba(0,39,77,.06);
+  padding:.65rem 1rem calc(.65rem + env(safe-area-inset-bottom))}
+.navbar-inner{max-width:780px; margin:0 auto; display:flex; gap:.6rem; align-items:center}
+.progress{flex:1; height:8px; background:var(--paper); border-radius:999px; overflow:hidden;
+  border:1px solid var(--line)}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--celeste));
+  transition:width .3s}
+.btn{font:inherit; font-weight:600; border-radius:10px; padding:.7rem 1.1rem; cursor:pointer;
+  border:1.5px solid transparent; white-space:nowrap}
+.btn-primary{background:var(--navy); color:#fff}
+.btn-primary:hover{background:#013a72}
+.btn-ghost{background:#fff; color:var(--navy); border-color:var(--line)}
+.btn-ghost:hover{background:var(--paper)}
+.btn:disabled{opacity:.5; cursor:not-allowed}
+.btn-block{width:100%; justify-content:center; text-align:center}
+
+/* ---------- FINISH / STATUS ---------- */
+.status{border-radius:12px; padding:1rem; margin:.4rem 0 1rem; border:1px solid; font-size:.92rem}
+.status.info{background:var(--celeste-soft); border-color:#BFD9EF; color:var(--navy)}
+.status.ok{background:#E6F5EC; border-color:#B7E2C6; color:#0E6B37}
+.status.err{background:#FCEBEA; border-color:#F3C3BF; color:#8E2A22}
+.status b{display:block; margin-bottom:.2rem}
+.dl-row{display:grid; gap:.6rem; grid-template-columns:1fr}
+@media(min-width:520px){ .dl-row{grid-template-columns:1fr 1fr} }
+.spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.4);
+  border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:.4rem}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* welcome */
+.welcome-kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin:.9rem 0}
+.kpi{background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:.6rem; text-align:center}
+.kpi b{display:block; font-family:"Fraunces",serif; color:var(--navy); font-size:1.3rem}
+.kpi small{color:var(--muted); font-size:.7rem; line-height:1.2; display:block}
+
+footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); font-size:.78rem; text-align:center}
+
+@media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="brand-mark">C</div>
+    <div class="brand-txt">
+      <b>CENTRUM PUCP</b>
+      <span>Business School</span>
+    </div>
+  </div>
+  <nav class="rail" aria-label="Ruta APDAE">
+    <ol id="rail"></ol>
+  </nav>
+</header>
+
+<main>
+  <form id="wizard" novalidate>
+
+    <!-- STEP 0 · BIENVENIDA + DATOS -->
+    <section class="card step" data-step="0">
+      <div class="step-head">
+        <span class="eyebrow">Especialización · Gestión del Talento Humano</span>
+        <h2>Seminario de Competencias</h2>
+        <p class="lead">Plan personal de desarrollo de competencias para el Analista de Gestión del Talento Humano. Completa cada etapa de la Ruta APDAE y al final recibes tu plan en PDF, en Word y una copia en tu correo.</p>
+      </div>
+
+      <div class="welcome-kpis">
+        <div class="kpi"><b>5</b><small>etapas de la Ruta APDAE</small></div>
+        <div class="kpi"><b>10</b><small>competencias que evalúas</small></div>
+        <div class="kpi"><b>90</b><small>días de plan de acción</small></div>
+      </div>
+
+      <label for="f-nombre">Nombres y apellidos <span class="req">*</span></label>
+      <input type="text" id="f-nombre" name="nombre" autocomplete="name" placeholder="Ej. Ana Torres Ramírez" required>
+      <div class="field-err">Escribe tu nombre completo.</div>
+
+      <div class="two">
+        <div>
+          <label for="f-correo">Correo electrónico <span class="req">*</span>
+            <span class="hint">Aquí llega tu plan</span></label>
+          <input type="email" id="f-correo" name="correo" autocomplete="email" inputmode="email" placeholder="tucorreo@ejemplo.com" required>
+          <div class="field-err">Escribe un correo válido.</div>
+        </div>
+        <div>
+          <label for="f-org">Organización o área <span class="hint">(opcional)</span></label>
+          <input type="text" id="f-org" name="org" placeholder="Ej. RR. HH. - Selección">
+        </div>
+      </div>
+
+      <label for="f-cargo">Cargo actual <span class="hint">(opcional)</span></label>
+      <input type="text" id="f-cargo" name="cargo" placeholder="Ej. Analista de Talento Humano">
+
+      <blockquote>“Antes de ser líder, el éxito tiene que ver con crecer tú; cuando eres líder, el éxito tiene que ver con hacer crecer a los demás.”
+        <small>Jack Welch</small></blockquote>
+    </section>
+
+    <!-- STEP 1 · A · AUTOCONOCIMIENTO (DIAGNÓSTICO) -->
+    <section class="card step" data-step="1" hidden>
+      <div class="step-head">
+        <span class="eyebrow">A · Autoconocimiento</span>
+        <h2>Diagnóstico de competencias</h2>
+        <p class="lead">Responde con honestidad, pensando en tu comportamiento habitual y no en tu intención. Escala: 1 muy por debajo, 3 aceptable, 5 fortaleza destacada.</p>
+      </div>
+      <div class="diag" id="diag"></div>
+      <div class="avg" id="avg" hidden>
+        <div class="num" id="avgNum">–</div>
+        <div class="txt" id="avgTxt"></div>
+      </div>
+    </section>
+
+    <!-- STEP 2 · P · PROPÓSITO -->
+    <section class="card step" data-step="2" hidden>
+      <div class="step-head">
+        <span class="eyebrow">P · Propósito</span>
+        <h2>Identidad y propósito</h2>
+        <p class="lead">Elige los valores que no negocias como profesional del talento y redacta tu declaración personal.</p>
+      </div>
+
+      <label>Mis valores clave <span class="hint">elige de 3 a 5</span></label>
+      <div class="checks" id="valores"></div>
+
+      <label for="f-declaracion">Mi declaración de desarrollo <span class="req">*</span>
+        <span class="hint">Empieza con “Como analista de talento, mi propósito es…”</span></label>
+      <textarea id="f-declaracion" name="declaracion" placeholder="Como analista de talento, mi propósito es…"></textarea>
+      <div class="field-err">Escribe tu declaración de propósito.</div>
+
+      <label for="f-vision">Mi visión a tres años <span class="hint">(opcional, en tiempo presente)</span></label>
+      <textarea id="f-vision" name="vision" placeholder="En 2029 soy un analista de talento que…"></textarea>
+
+      <blockquote>“El ejemplo no es lo principal para influir en los demás; es lo único.”
+        <small>Albert Schweitzer</small></blockquote>
+    </section>
+
+    <!-- STEP 3 · D · DIRECCIÓN -->
+    <section class="card step" data-step="3" hidden>
+      <div class="step-head">
+        <span class="eyebrow">D · Dirección</span>
+        <h2>Objetivos de desarrollo</h2>
+        <p class="lead">Define de 1 a 3 objetivos con el marco SMARTER: específico, medible, alcanzable, relevante, con tiempo, evaluable y revisable.</p>
+      </div>
+      <div id="objetivos"></div>
+      <button type="button" class="add" id="addObjetivo">+ Agregar objetivo</button>
+    </section>
+
+    <!-- STEP 4 · A · ACCIÓN -->
+    <section class="card step" data-step="4" hidden>
+      <div class="step-head">
+        <span class="eyebrow">A · Acción</span>
+        <h2>Plan de acción y hábitos</h2>
+        <p class="lead">Modelo 70-20-10: el mayor aprendizaje viene de la experiencia (70), del acompañamiento (20) y de la formación (10).</p>
+      </div>
+
+      <label>Acciones de mi plan <span class="hint">indica 70, 20 o 10 en cada una</span></label>
+      <div id="acciones"></div>
+      <button type="button" class="add" id="addAccion">+ Agregar acción</button>
+
+      <label style="margin-top:1.2rem">Hábitos que sostendré (30 · 60 · 90 días)
+        <span class="hint">elige pocos y consolídalos</span></label>
+      <div class="checks" id="habitos"></div>
+
+      <blockquote>“El liderazgo y el aprendizaje son indispensables el uno para el otro.”
+        <small>John F. Kennedy</small></blockquote>
+    </section>
+
+    <!-- STEP 5 · E · EVOLUCIÓN -->
+    <section class="card step" data-step="5" hidden>
+      <div class="step-head">
+        <span class="eyebrow">E · Evolución</span>
+        <h2>Compromiso y seguimiento</h2>
+        <p class="lead">El compromiso es el puente entre la reflexión y la acción. Revísalo cada mes.</p>
+      </div>
+
+      <label for="f-fortalecer">Tres comportamientos que fortaleceré <span class="req">*</span></label>
+      <input type="text" id="f-fortalecer" name="fortalecer" placeholder="Ej. escucha activa, uso de datos, feedback">
+      <div class="field-err">Indica los comportamientos que fortalecerás.</div>
+
+      <label for="f-dejar">Dos comportamientos que dejaré de realizar</label>
+      <input type="text" id="f-dejar" name="dejar" placeholder="Ej. resolver todo yo, postergar conversaciones">
+
+      <label for="f-conversacion">Una conversación pendiente que asumiré</label>
+      <input type="text" id="f-conversacion" name="conversacion" placeholder="Ej. feedback de desarrollo con…">
+
+      <div class="two">
+        <div>
+          <label for="f-compEquipo">Un compromiso con mi equipo</label>
+          <input type="text" id="f-compEquipo" name="compEquipo" placeholder="Ej. dar feedback quincenal">
+        </div>
+        <div>
+          <label for="f-compProposito">Un compromiso con mi propósito</label>
+          <input type="text" id="f-compProposito" name="compProposito" placeholder="Ej. seguir formándome en people analytics">
+        </div>
+      </div>
+
+      <label for="f-revision">Cómo daré seguimiento cada mes <span class="hint">semáforo: verde, amarillo, rojo</span></label>
+      <textarea id="f-revision" name="revision" placeholder="Revisaré mi avance el primer lunes de cada mes usando el semáforo…"></textarea>
+
+      <blockquote>“Cae siete veces, levántate ocho.”
+        <small>Proverbio japonés</small></blockquote>
+    </section>
+
+    <!-- STEP 6 · GENERAR Y ENVIAR -->
+    <section class="card step" data-step="6" hidden>
+      <div class="step-head">
+        <span class="eyebrow">Cierre</span>
+        <h2>Tu plan está listo</h2>
+        <p class="lead">Genera tu documento y envíalo a tu correo. También queda una copia para el docente.</p>
+      </div>
+
+      <div id="statusBox" class="status info">
+        <b>Revisa tus datos</b>
+        Al presionar “Generar y enviar” se descargará tu plan y se enviará una copia a tu correo. Si el correo no llega, revisa la carpeta de spam.
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" id="btnSend">Generar y enviar mi plan</button>
+
+      <div class="dl-row" style="margin-top:.8rem">
+        <button type="button" class="btn btn-ghost btn-block" id="btnPdf">Descargar PDF</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnWord">Descargar Word</button>
+      </div>
+
+      <blockquote>“Un líder conoce el camino, recorre el camino y muestra el camino.”
+        <small>John C. Maxwell</small></blockquote>
+    </section>
+
+  </form>
+
+  <footer>
+    CENTRUM PUCP Business School · Especialización en Analista de Gestión del Talento Humano · Seminario de Competencias · 2026
+  </footer>
+</main>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <button type="button" class="btn btn-ghost" id="btnPrev">Anterior</button>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+    <button type="button" class="btn btn-primary" id="btnNext">Siguiente</button>
+  </div>
+</div>
+
+<!-- Contenedor oculto para renderizar el PDF -->
+<div id="printArea" style="position:fixed; left:-9999px; top:0; width:794px; background:#fff"></div>
+
+<script>
+/* ============================================================
+   DATOS DE CONTENIDO
+============================================================ */
+const COMPETENCIAS = [
+  "Autoconocimiento",
+  "Comunicación efectiva",
+  "Escucha activa y empatía",
+  "Analítica de datos de talento (people analytics)",
+  "Gestión del desempeño",
+  "Atracción y selección de talento",
+  "Desarrollo y capacitación",
+  "Trabajo en equipo y colaboración",
+  "Adaptabilidad y gestión del cambio",
+  "Ética y confidencialidad"
+];
+const VALORES = [
+  "Integridad","Confidencialidad","Respeto por las personas","Equidad",
+  "Aprendizaje continuo","Orientación al servicio","Colaboración","Orientación a resultados"
+];
+const HABITOS = [
+  "Reflexión diaria (5 min)","Escucha activa","Decidir con datos","Solicitar feedback",
+  "Reconocimiento al equipo","Documentación ordenada","Priorización semanal",
+  "Conversaciones de desarrollo","Actualización profesional","Gestión emocional"
+];
+
+/* ============================================================
+   ESTADO Y NAVEGACIÓN
+============================================================ */
+const STAGES = [
+  {k:"A", t:"Autoconocimiento"},
+  {k:"P", t:"Propósito"},
+  {k:"D", t:"Dirección"},
+  {k:"A", t:"Acción"},
+  {k:"E", t:"Evolución"}
+];
+const STEP_TO_STAGE = {1:0, 2:1, 3:2, 4:3, 5:4};
+const TOTAL_STEPS = 7;
+let current = 0;
+const $ = (s,c=document)=>c.querySelector(s);
+const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+/* ---- Ruta APDAE (rail) ---- */
+function renderRail(){
+  const ol = $("#rail"); ol.innerHTML = "";
+  const activeStage = STEP_TO_STAGE[current];
+  STAGES.forEach((st, i)=>{
+    const li = document.createElement("li");
+    let cls = "stage";
+    if(activeStage === i) cls += " active";
+    else if(activeStage !== undefined && i < activeStage) cls += " done";
+    else if(current === TOTAL_STEPS-1) cls += " done";
+    li.innerHTML = `<div class="${cls}"><span class="dot">${st.k}</span><small>${st.t}</small></div>`;
+    ol.appendChild(li);
+  });
+}
+
+/* ---- Mostrar paso ---- */
+function showStep(n){
+  current = Math.max(0, Math.min(TOTAL_STEPS-1, n));
+  $$(".step").forEach(s=>{ s.hidden = (+s.dataset.step !== current); });
+  $("#bar").style.width = ((current)/(TOTAL_STEPS-1)*100) + "%";
+  $("#btnPrev").style.visibility = current===0 ? "hidden" : "visible";
+  const next = $("#btnNext");
+  next.textContent = current===TOTAL_STEPS-2 ? "Revisar" : "Siguiente";
+  next.style.display = current===TOTAL_STEPS-1 ? "none" : "inline-block";
+  renderRail();
+  window.scrollTo({top:0, behavior:"smooth"});
+  saveDraft();
+}
+
+/* ============================================================
+   RENDER DE CAMPOS DINÁMICOS
+============================================================ */
+function renderDiag(){
+  const box = $("#diag"); box.innerHTML = "";
+  COMPETENCIAS.forEach((c,i)=>{
+    const row = document.createElement("div");
+    row.className = "diag-row";
+    let scale = `<div class="scale" role="radiogroup" aria-label="${c}">`;
+    for(let v=1; v<=5; v++){
+      scale += `<label><input type="radio" name="diag${i}" value="${v}"><span>${v}</span></label>`;
+    }
+    scale += `</div>`;
+    row.innerHTML = `<div class="name">${i+1}. ${c}</div>${scale}`;
+    box.appendChild(row);
+  });
+  box.addEventListener("change", updateAvg);
+}
+function updateAvg(){
+  let sum=0, count=0;
+  COMPETENCIAS.forEach((_,i)=>{
+    const sel = $(`input[name="diag${i}"]:checked`);
+    if(sel){ sum += +sel.value; count++; }
+  });
+  const box = $("#avg");
+  if(count===0){ box.hidden = true; return; }
+  const avg = sum/count;
+  box.hidden = false;
+  $("#avgNum").textContent = avg.toFixed(2);
+  let msg;
+  if(avg>=4){ msg = "Perfil consolidado. Profundiza tus fortalezas y ayuda a otros a crecer."; }
+  else if(avg>=3){ msg = "Base sólida con oportunidades claras. Prioriza dos o tres competencias."; }
+  else { msg = "Define pocas prioridades y hábitos frecuentes antes de abarcar más."; }
+  $("#avgTxt").innerHTML = `<b>Promedio de ${count}/${COMPETENCIAS.length} competencias.</b> ${msg}`;
+}
+
+function renderChecks(id, arr, name){
+  const box = $(id); box.innerHTML = "";
+  arr.forEach((v,i)=>{
+    const l = document.createElement("label");
+    l.className = "chk";
+    l.innerHTML = `<input type="checkbox" name="${name}" value="${v}"><span>${v}</span>`;
+    box.appendChild(l);
+  });
+}
+
+let objCount=0, accCount=0;
+function addObjetivo(){
+  if(objCount>=3) return;
+  objCount++;
+  const wrap = document.createElement("div");
+  wrap.className = "block";
+  wrap.innerHTML = `
+    <div class="bh"><b>Objetivo ${objCount}</b>
+      ${objCount>1 ? '<button type="button" class="rm">Quitar</button>' : ''}</div>
+    <label>Objetivo (verbo + resultado)</label>
+    <input type="text" data-f="objetivo" placeholder="Ej. Fortalecer mi escucha activa en las entrevistas">
+    <div class="two">
+      <div><label>Competencia asociada</label>
+        <input type="text" data-f="competencia" placeholder="Ej. Escucha activa"></div>
+      <div><label>Plazo</label>
+        <input type="text" data-f="plazo" placeholder="Ej. 90 días"></div>
+    </div>
+    <label>Indicador y meta</label>
+    <input type="text" data-f="meta" placeholder="Ej. 100% de entrevistas con resumen validado">`;
+  wrap.querySelector(".rm")?.addEventListener("click", ()=>{ wrap.remove(); renumber("#objetivos","Objetivo"); });
+  $("#objetivos").appendChild(wrap);
+  if(objCount>=3) $("#addObjetivo").style.display="none";
+}
+function addAccion(){
+  if(accCount>=4) return;
+  accCount++;
+  const wrap = document.createElement("div");
+  wrap.className = "block";
+  wrap.innerHTML = `
+    <div class="bh"><b>Acción ${accCount}</b>
+      ${accCount>1 ? '<button type="button" class="rm">Quitar</button>' : ''}</div>
+    <label>¿Qué haré?</label>
+    <input type="text" data-f="accion" placeholder="Ej. Reuniones mensuales de desarrollo con cada colaborador">
+    <div class="two">
+      <div><label>Tipo de aprendizaje</label>
+        <select data-f="tipo">
+          <option value="70">70 · Experiencia y retos</option>
+          <option value="20">20 · Acompañamiento y feedback</option>
+          <option value="10">10 · Formación y lecturas</option>
+        </select></div>
+      <div><label>Indicador de avance</label>
+        <input type="text" data-f="indicador" placeholder="Ej. 3 sesiones realizadas"></div>
+    </div>`;
+  wrap.querySelector(".rm")?.addEventListener("click", ()=>{ wrap.remove(); renumber("#acciones","Acción"); });
+  $("#acciones").appendChild(wrap);
+  if(accCount>=4) $("#addAccion").style.display="none";
+}
+function renumber(sel, label){
+  const blocks = $$(sel+" .block");
+  if(sel==="#objetivos"){ objCount=blocks.length; $("#addObjetivo").style.display = objCount>=3?"none":"block"; }
+  else { accCount=blocks.length; $("#addAccion").style.display = accCount>=4?"none":"block"; }
+  blocks.forEach((b,i)=> b.querySelector(".bh b").textContent = `${label} ${i+1}`);
+}
+
+/* ============================================================
+   VALIDACIÓN
+============================================================ */
+function markInvalid(inputEl, bad){
+  const field = inputEl.closest("label")?.parentElement || inputEl.parentElement;
+  const container = inputEl.closest(".two > div, .step, .card") ;
+  // toggle on the immediate wrapper that holds .field-err
+  const wrap = inputEl.parentElement;
+  wrap.classList.toggle("invalid", bad);
+}
+function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+function validateStep(n){
+  let ok = true;
+  const need = [];
+  if(n===0){
+    need.push([$("#f-nombre"), v=>v.trim().length>1]);
+    need.push([$("#f-correo"), v=>validEmail(v.trim())]);
+  }
+  if(n===2){
+    need.push([$("#f-declaracion"), v=>v.trim().length>3]);
+  }
+  if(n===5){
+    need.push([$("#f-fortalecer"), v=>v.trim().length>2]);
+  }
+  need.forEach(([el,test])=>{
+    const good = test(el.value);
+    el.parentElement.classList.toggle("invalid", !good);
+    if(!good) ok=false;
+  });
+  return ok;
+}
+
+/* ============================================================
+   RECOLECCIÓN DE DATOS
+============================================================ */
+function collect(){
+  const d = {
+    nombre: $("#f-nombre").value.trim(),
+    correo: $("#f-correo").value.trim(),
+    org: $("#f-org").value.trim(),
+    cargo: $("#f-cargo").value.trim(),
+    declaracion: $("#f-declaracion").value.trim(),
+    vision: $("#f-vision").value.trim(),
+    fortalecer: $("#f-fortalecer").value.trim(),
+    dejar: $("#f-dejar").value.trim(),
+    conversacion: $("#f-conversacion").value.trim(),
+    compEquipo: $("#f-compEquipo").value.trim(),
+    compProposito: $("#f-compProposito").value.trim(),
+    revision: $("#f-revision").value.trim(),
+    diag: [], avg: null,
+    valores: $$('input[name="valores"]:checked').map(i=>i.value),
+    habitos: $$('input[name="habitos"]:checked').map(i=>i.value),
+    objetivos: [], acciones: []
+  };
+  let sum=0,c=0;
+  COMPETENCIAS.forEach((name,i)=>{
+    const sel = $(`input[name="diag${i}"]:checked`);
+    const val = sel ? +sel.value : null;
+    d.diag.push({name, val});
+    if(val){ sum+=val; c++; }
+  });
+  d.avg = c ? (sum/c) : null;
+  $$("#objetivos .block").forEach(b=>{
+    d.objetivos.push({
+      objetivo: b.querySelector('[data-f="objetivo"]').value.trim(),
+      competencia: b.querySelector('[data-f="competencia"]').value.trim(),
+      plazo: b.querySelector('[data-f="plazo"]').value.trim(),
+      meta: b.querySelector('[data-f="meta"]').value.trim()
+    });
+  });
+  $$("#acciones .block").forEach(b=>{
+    d.acciones.push({
+      accion: b.querySelector('[data-f="accion"]').value.trim(),
+      tipo: b.querySelector('[data-f="tipo"]').value,
+      indicador: b.querySelector('[data-f="indicador"]').value.trim()
+    });
+  });
+  d.fecha = new Date().toLocaleDateString("es-PE",{day:"2-digit",month:"long",year:"numeric"});
+  return d;
+}
+
+/* ============================================================
+   CONSTRUCCIÓN DEL DOCUMENTO
+============================================================ */
+function esc(s){ return (s||"").replace(/[&<>]/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;" }[m])); }
+function interp(avg){
+  if(avg==null) return "";
+  if(avg>=4) return "Perfil consolidado.";
+  if(avg>=3) return "Base sólida con oportunidades claras.";
+  return "Prioriza pocas competencias y hábitos frecuentes.";
+}
+
+function buildHTML(d){
+  const diagRows = d.diag.map(x=>`<tr><td>${esc(x.name)}</td><td style="text-align:center">${x.val ?? "-"}</td></tr>`).join("");
+  const objRows = d.objetivos.filter(o=>o.objetivo).map((o,i)=>`
+    <tr><td>${i+1}</td><td>${esc(o.objetivo)}</td><td>${esc(o.competencia)}</td>
+    <td>${esc(o.meta)}</td><td>${esc(o.plazo)}</td></tr>`).join("") || `<tr><td colspan="5">—</td></tr>`;
+  const accRows = d.acciones.filter(a=>a.accion).map(a=>`
+    <tr><td style="text-align:center"><b>${a.tipo}</b></td><td>${esc(a.accion)}</td><td>${esc(a.indicador)}</td></tr>`).join("")
+    || `<tr><td colspan="3">—</td></tr>`;
+  const list = (arr)=> arr.length ? "<ul>"+arr.map(v=>`<li>${esc(v)}</li>`).join("")+"</ul>" : "<p>—</p>";
+
+  return `
+  <div class="doc">
+    <div class="doc-head">
+      <div class="dm">C</div>
+      <div><div class="dh1">CENTRUM PUCP · Business School</div>
+      <div class="dh2">Especialización en Analista de Gestión del Talento Humano</div></div>
+    </div>
+    <h1>Plan de Desarrollo de Competencias</h1>
+    <table class="meta"><tr><td><b>Participante:</b> ${esc(d.nombre)}</td><td><b>Fecha:</b> ${esc(d.fecha)}</td></tr>
+    <tr><td><b>Correo:</b> ${esc(d.correo)}</td><td><b>Cargo:</b> ${esc(d.cargo)||"—"}</td></tr>
+    ${d.org?`<tr><td colspan="2"><b>Organización:</b> ${esc(d.org)}</td></tr>`:""}</table>
+
+    <h2>1 · Autoconocimiento — Diagnóstico</h2>
+    <table><thead><tr><th>Competencia</th><th style="width:90px">Nivel (1-5)</th></tr></thead><tbody>${diagRows}</tbody></table>
+    ${d.avg!=null?`<p class="res"><b>Promedio: ${d.avg.toFixed(2)}.</b> ${interp(d.avg)}</p>`:""}
+
+    <h2>2 · Propósito — Identidad</h2>
+    <p><b>Valores clave:</b> ${d.valores.length?esc(d.valores.join(", ")):"—"}</p>
+    <p><b>Declaración:</b> ${esc(d.declaracion)||"—"}</p>
+    ${d.vision?`<p><b>Visión a tres años:</b> ${esc(d.vision)}</p>`:""}
+
+    <h2>3 · Dirección — Objetivos (SMARTER)</h2>
+    <table><thead><tr><th style="width:24px">#</th><th>Objetivo</th><th>Competencia</th><th>Meta</th><th>Plazo</th></tr></thead><tbody>${objRows}</tbody></table>
+
+    <h2>4 · Acción — Plan 70-20-10 y hábitos</h2>
+    <table><thead><tr><th style="width:44px">Tipo</th><th>Acción</th><th>Indicador</th></tr></thead><tbody>${accRows}</tbody></table>
+    <p><b>Hábitos (30·60·90 días):</b></p>${list(d.habitos)}
+
+    <h2>5 · Evolución — Compromiso y seguimiento</h2>
+    <p><b>Fortaleceré:</b> ${esc(d.fortalecer)||"—"}</p>
+    <p><b>Dejaré de hacer:</b> ${esc(d.dejar)||"—"}</p>
+    <p><b>Conversación pendiente:</b> ${esc(d.conversacion)||"—"}</p>
+    <p><b>Compromiso con mi equipo:</b> ${esc(d.compEquipo)||"—"}</p>
+    <p><b>Compromiso con mi propósito:</b> ${esc(d.compProposito)||"—"}</p>
+    ${d.revision?`<p><b>Seguimiento mensual:</b> ${esc(d.revision)}</p>`:""}
+
+    <div class="firma"><div class="fl"></div><div>${esc(d.nombre)}<br><small>Firma del participante · ${esc(d.fecha)}</small></div></div>
+    <p class="foot">CENTRUM PUCP Business School · Seminario de Competencias · 2026</p>
+  </div>`;
+}
+
+const DOC_CSS = `
+  .doc{font-family:Georgia,'Times New Roman',serif; color:#0B1D33; padding:40px 44px; width:794px}
+  .doc-head{display:flex; align-items:center; gap:12px; border-bottom:3px solid #B08D3E; padding-bottom:10px; margin-bottom:18px}
+  .dm{width:36px;height:36px;border-radius:7px;background:#00274D;color:#fff;display:grid;place-items:center;font-weight:700;font-family:Georgia,serif}
+  .dh1{font-weight:700;color:#00274D;font-size:14px}
+  .dh2{font-size:11px;color:#5A6B7C;text-transform:uppercase;letter-spacing:.06em}
+  .doc h1{font-size:24px;color:#00274D;margin:0 0 12px}
+  .doc h2{font-size:15px;color:#0B5FA5;margin:22px 0 8px;border-bottom:1px solid #D3E0EC;padding-bottom:4px}
+  .doc p{font-size:12.5px;line-height:1.5;margin:0 0 7px}
+  .doc table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:11.5px}
+  .doc th,.doc td{border:1px solid #C9D8E6;padding:5px 7px;text-align:left;vertical-align:top}
+  .doc th{background:#EEF3F9;color:#00274D}
+  .doc table.meta,.doc table.meta td{border:0;font-size:12px;padding:2px 0;width:50%}
+  .doc ul{margin:2px 0 8px 18px;padding:0;font-size:12.5px}
+  .doc .res{background:#DCEBF7;border-left:3px solid #2E86C1;padding:7px 10px;font-size:12.5px}
+  .doc .firma{margin-top:34px;display:flex;gap:12px;align-items:flex-end}
+  .doc .firma .fl{width:200px;border-bottom:1px solid #0B1D33;height:1px;margin-bottom:20px}
+  .doc .foot{margin-top:26px;text-align:center;color:#5A6B7C;font-size:10.5px;border-top:1px solid #D3E0EC;padding-top:8px}
+`;
+
+function buildText(d){
+  const L=[];
+  L.push("PLAN DE DESARROLLO DE COMPETENCIAS");
+  L.push("CENTRUM PUCP Business School");
+  L.push("Especializacion en Analista de Gestion del Talento Humano");
+  L.push("=".repeat(52));
+  L.push(`Participante: ${d.nombre}`);
+  L.push(`Correo: ${d.correo}`);
+  if(d.cargo) L.push(`Cargo: ${d.cargo}`);
+  if(d.org) L.push(`Organizacion: ${d.org}`);
+  L.push(`Fecha: ${d.fecha}`);
+  L.push("");
+  L.push("1. AUTOCONOCIMIENTO - DIAGNOSTICO");
+  d.diag.forEach(x=> L.push(`   - ${x.name}: ${x.val ?? "-"}`));
+  if(d.avg!=null) L.push(`   Promedio: ${d.avg.toFixed(2)}. ${interp(d.avg)}`);
+  L.push("");
+  L.push("2. PROPOSITO - IDENTIDAD");
+  L.push(`   Valores: ${d.valores.join(", ") || "-"}`);
+  L.push(`   Declaracion: ${d.declaracion || "-"}`);
+  if(d.vision) L.push(`   Vision a 3 anios: ${d.vision}`);
+  L.push("");
+  L.push("3. DIRECCION - OBJETIVOS (SMARTER)");
+  const objs = d.objetivos.filter(o=>o.objetivo);
+  if(objs.length) objs.forEach((o,i)=> L.push(`   ${i+1}) ${o.objetivo} | Competencia: ${o.competencia||"-"} | Meta: ${o.meta||"-"} | Plazo: ${o.plazo||"-"}`));
+  else L.push("   -");
+  L.push("");
+  L.push("4. ACCION - PLAN 70-20-10 Y HABITOS");
+  const accs = d.acciones.filter(a=>a.accion);
+  if(accs.length) accs.forEach(a=> L.push(`   [${a.tipo}] ${a.accion} | Indicador: ${a.indicador||"-"}`));
+  else L.push("   -");
+  L.push(`   Habitos: ${d.habitos.join(", ") || "-"}`);
+  L.push("");
+  L.push("5. EVOLUCION - COMPROMISO Y SEGUIMIENTO");
+  L.push(`   Fortalecere: ${d.fortalecer || "-"}`);
+  L.push(`   Dejare de hacer: ${d.dejar || "-"}`);
+  L.push(`   Conversacion pendiente: ${d.conversacion || "-"}`);
+  L.push(`   Compromiso con mi equipo: ${d.compEquipo || "-"}`);
+  L.push(`   Compromiso con mi proposito: ${d.compProposito || "-"}`);
+  if(d.revision) L.push(`   Seguimiento mensual: ${d.revision}`);
+  L.push("");
+  L.push("=".repeat(52));
+  L.push("CENTRUM PUCP Business School - Seminario de Competencias - 2026");
+  return L.join("\n");
+}
+
+/* ============================================================
+   DESCARGAS (PDF y WORD)
+============================================================ */
+function fileName(d, ext){
+  const slug = (d.nombre||"participante").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-zA-Z0-9]+/g,"_").replace(/^_|_$/g,"");
+  return `Plan_Competencias_${slug}.${ext}`;
+}
+function downloadPDF(d){
+  const area = $("#printArea");
+  area.innerHTML = `<style>${DOC_CSS}</style>` + buildHTML(d);
+  return html2pdf().set({
+    margin:0,
+    filename: fileName(d,"pdf"),
+    image:{type:"jpeg", quality:.98},
+    html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"},
+    jsPDF:{unit:"pt", format:"a4", orientation:"portrait"},
+    pagebreak:{mode:["css","legacy"]}
+  }).from(area).save();
+}
+function downloadWord(d){
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office'
+    xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset='utf-8'><style>${DOC_CSS} body{margin:0}</style></head>
+    <body>${buildHTML(d)}</body></html>`;
+  const blob = new Blob(['\ufeff', html], {type:"application/msword"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = fileName(d,"doc"); document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 500);
+}
+
+/* ============================================================
+   ENVÍO DE CORREO (EmailJS)  ·  con manejo de errores claro
+============================================================ */
+let emailReady = false;
+function initEmail(){
+  const c = EMAILJS_CONFIG;
+  const missing = !c.publicKey || c.publicKey.startsWith("PEGA_") ||
+                  !c.serviceId || c.serviceId.startsWith("PEGA_") ||
+                  !c.templateId || c.templateId.startsWith("PEGA_");
+  if(missing || typeof emailjs === "undefined"){ emailReady = false; return; }
+  try{ emailjs.init({ publicKey: c.publicKey }); emailReady = true; }
+  catch(e){ emailReady = false; }
+}
+function sendEmail(d){
+  return new Promise((resolve, reject)=>{
+    if(!emailReady){
+      reject(new Error("El envío de correo no está configurado. Falta pegar las claves de EmailJS en el archivo (bloque CONFIGURACIÓN DEL CORREO)."));
+      return;
+    }
+    const params = {
+      to_email: d.correo,
+      to_name: d.nombre,
+      reply_to: d.correo,
+      cc_email: EMAILJS_CONFIG.copiaDocente || "",
+      mensaje: buildText(d)
+    };
+    emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
+      .then(resolve)
+      .catch(err=>{
+        const t = (err && (err.text || err.message)) || "Error desconocido de EmailJS.";
+        reject(new Error(t));
+      });
+  });
+}
+
+/* ============================================================
+   FLUJO FINAL
+============================================================ */
+function setStatus(kind, title, msg){
+  const box = $("#statusBox");
+  box.className = "status " + kind;
+  box.innerHTML = `<b>${title}</b>${msg}`;
+}
+
+async function generateAndSend(){
+  // valida los pasos con campos obligatorios antes de enviar
+  for(const s of [0,2,5]){
+    if(!validateStep(s)){
+      showStep(s);
+      return;
+    }
+  }
+  const d = collect();
+  const btn = $("#btnSend");
+  btn.disabled = true;
+
+  // 1) descarga garantizada (siempre funciona, aunque el correo falle)
+  try{ downloadPDF(d); }catch(e){ /* el botón manual queda disponible */ }
+
+  // 2) envío del correo
+  setStatus("info","<span class='spin'></span>Enviando tu plan…", "Estamos generando tu documento y enviando la copia a "+esc(d.correo)+".");
+  try{
+    await sendEmail(d);
+    setStatus("ok","Listo. Copia enviada a tu correo",
+      `Enviamos tu plan a <b>${esc(d.correo)}</b> (con copia al docente). Si no lo ves en unos minutos, revisa la carpeta de spam o correo no deseado. Tu PDF también se descargó.`);
+  }catch(err){
+    setStatus("err","No se pudo enviar el correo",
+      `Tu plan sí se descargó en este dispositivo, úsalo con los botones de abajo. Detalle técnico: ${esc(err.message)}`);
+  }finally{
+    btn.disabled = false;
+  }
+}
+
+/* ============================================================
+   BORRADOR (opcional; se guarda solo si el navegador lo permite)
+============================================================ */
+const DRAFT_KEY = "seminario_competencias_centrum_v1";
+function saveDraft(){
+  try{
+    const data = {};
+    $$("#wizard input, #wizard textarea, #wizard select").forEach(el=>{
+      if(el.type==="radio"||el.type==="checkbox"){ if(el.checked) (data[el.name]=data[el.name]||[]).push(el.value); }
+      else if(el.id){ data[el.id]=el.value; }
+    });
+    data.__objCount=objCount; data.__accCount=accCount; data.__step=current;
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+  }catch(e){/* sin almacenamiento: se ignora */}
+}
+function loadDraft(){
+  try{
+    const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return false;
+    const data = JSON.parse(raw);
+    // reconstruye bloques dinámicos
+    const oc = data.__objCount||1, ac = data.__accCount||1;
+    while(objCount<oc) addObjetivo();
+    while(accCount<ac) addAccion();
+    // valores simples
+    Object.keys(data).forEach(k=>{
+      if(k.startsWith("__")) return;
+      const el = document.getElementById(k);
+      if(el && typeof data[k]==="string") el.value = data[k];
+    });
+    // radios/checks
+    ["valores","habitos"].forEach(n=>{
+      (data[n]||[]).forEach(v=>{ const el=$(`input[name="${n}"][value="${CSS.escape(v)}"]`); if(el) el.checked=true; });
+    });
+    COMPETENCIAS.forEach((_,i)=>{ (data["diag"+i]||[]).forEach(v=>{ const el=$(`input[name="diag${i}"][value="${v}"]`); if(el) el.checked=true; }); });
+    updateAvg();
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ============================================================
+   INICIO
+============================================================ */
+document.addEventListener("DOMContentLoaded", ()=>{
+  renderDiag();
+  renderChecks("#valores", VALORES, "valores");
+  renderChecks("#habitos", HABITOS, "habitos");
+  addObjetivo();
+  addAccion();
+  initEmail();
+  loadDraft();
+
+  $("#addObjetivo").addEventListener("click", ()=>{ addObjetivo(); saveDraft(); });
+  $("#addAccion").addEventListener("click", ()=>{ addAccion(); saveDraft(); });
+
+  $("#btnNext").addEventListener("click", ()=>{
+    if(!validateStep(current)) return;
+    showStep(current+1);
+  });
+  $("#btnPrev").addEventListener("click", ()=> showStep(current-1));
+
+  $("#wizard").addEventListener("input", ()=>{ clearTimeout(window.__t); window.__t=setTimeout(saveDraft,600); });
+
+  $("#btnSend").addEventListener("click", generateAndSend);
+  $("#btnPdf").addEventListener("click", ()=>{ try{ downloadPDF(collect()); }catch(e){ alert("No se pudo generar el PDF: "+e.message); } });
+  $("#btnWord").addEventListener("click", ()=> downloadWord(collect()));
+
+  showStep(0);
+});
+</script>
+</body>
+</html>
