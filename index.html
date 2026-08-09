@@ -4,44 +4,42 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Seminario de Competencias · Plan de Desarrollo · CENTRUM PUCP</title>
-<meta name="description" content="Plan de Desarrollo de Competencias para la Especialización en Analista de Gestión del Talento Humano. CENTRUM PUCP Business School." />
+<meta name="description" content="Plan de Desarrollo de Competencias para la Especialización en Analista de Gestión del Talento Humano. Empleabilidad 2030. CENTRUM PUCP Business School." />
 
 <!--
 ======================================================================
-  CONFIGURACIÓN DEL CORREO (EmailJS)  ·  LÉEME ANTES DE PUBLICAR
+  CONFIGURACIÓN DEL ENVÍO  ·  LÉEME
 ======================================================================
-  El envío del correo es lo más importante. Este bloque es lo único
-  que debes editar. En otras ocasiones "no se envía nada" porque las
-  tres claves de EmailJS no están puestas o el template no tiene el
-  campo "To Email" configurado. Sigue estos pasos una sola vez:
+  Hay dos canales. Solo el primero es obligatorio.
 
-  1) Crea una cuenta gratuita en https://www.emailjs.com
-  2) Email Services  ->  Add New Service (Gmail u Outlook con tu correo
-     institucional). Copia el Service ID.
-  3) Email Templates ->  Create New Template. En la pestaña "Settings"
-     del template escribe EXACTAMENTE estos valores en cada campo:
-        To Email   :  {{to_email}}
-        From Name  :  Seminario de Competencias CENTRUM PUCP
-        Reply To   :  {{reply_to}}
-        Cc         :  {{cc_email}}
-        Subject    :  Tu Plan de Desarrollo de Competencias - {{to_name}}
-     En el "Content" del template pon solo:  {{mensaje}}
-     (deja el contenido como "text", no hace falta HTML).
-     Guarda y copia el Template ID.
-  4) Account -> General -> copia tu Public Key.
-  5) Pega los tres valores abajo, entre comillas, y sube el archivo.
+  1) DOCENTE (obligatorio, sin claves): cada plan te llega a tu correo
+     usando FormSubmit. Solo pon tu correo abajo en "docenteEmail".
+     Activación única: la PRIMERA vez que alguien envíe el formulario,
+     FormSubmit te manda un correo de confirmación. Ábrelo y haz clic
+     en el botón de activación una sola vez. Desde ahí llegan todos.
+     (Tip: haz tú mismo un envío de prueba y confirma antes de la clase.)
 
-  Prueba: completa el seminario con TU propio correo y revisa bandeja
-  de entrada y spam. Si algo falla, la pantalla final te dirá el error.
+  2) ALUMNO (opcional, con EmailJS): si quieres que además le llegue una
+     copia al correo del propio participante, crea una cuenta gratis en
+     https://www.emailjs.com y pega las tres claves en "emailjs".
+     En el template de EmailJS pon en Settings:
+        To Email : {{to_email}}   Reply To : {{reply_to}}
+        Subject  : Tu Plan de Desarrollo de Competencias - {{to_name}}
+     y en Content solo:  {{mensaje}}
+     Si dejas las claves vacías, el alumno igual descarga su PDF/Word y
+     tú sí recibes su plan por el canal 1.
 ======================================================================
 -->
 <script>
-  const EMAILJS_CONFIG = {
-    publicKey:  "PEGA_AQUI_TU_PUBLIC_KEY",
-    serviceId:  "PEGA_AQUI_TU_SERVICE_ID",
-    templateId: "PEGA_AQUI_TU_TEMPLATE_ID",
-    // Copia oculta que llega al docente en cada envío. Déjalo o cámbialo.
-    copiaDocente: "amador.rivera@pucp.edu.pe"
+  const CONFIG = {
+    // CANAL 1 (obligatorio): aquí recibes cada plan. Cámbialo si quieres.
+    docenteEmail: "amador.rivera@pucp.edu.pe",
+    // CANAL 2 (opcional): copia al correo del alumno. Deja vacío si no lo usas.
+    emailjs: {
+      publicKey:  "",
+      serviceId:  "",
+      templateId: ""
+    }
   };
 </script>
 
@@ -49,7 +47,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Librerías cargadas desde CDN (funcionan en GitHub Pages) -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -63,22 +60,17 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0; background:var(--paper); color:var(--ink);
+body{margin:0; background:var(--paper); color:var(--ink);
   font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
-}
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;}
 h1,h2,h3{font-family:"Fraunces",Georgia,serif; font-weight:600; line-height:1.15; color:var(--navy); margin:0}
 p{margin:0 0 .8rem}
 a{color:var(--blue)}
 .eyebrow{font-family:"Inter",sans-serif; font-weight:700; letter-spacing:.14em;
   text-transform:uppercase; font-size:.68rem; color:var(--celeste)}
 
-/* ---------- HEADER ---------- */
-header{background:var(--navy); color:#fff; position:sticky; top:0; z-index:50;
-  border-bottom:3px solid var(--gold)}
-.head-inner{max-width:780px; margin:0 auto; padding:.7rem 1rem;
-  display:flex; align-items:center; gap:.7rem}
+header{background:var(--navy); color:#fff; position:sticky; top:0; z-index:50; border-bottom:3px solid var(--gold)}
+.head-inner{max-width:780px; margin:0 auto; padding:.7rem 1rem; display:flex; align-items:center; gap:.7rem}
 .brand-mark{width:34px; height:34px; border-radius:8px; flex:0 0 auto;
   background:linear-gradient(135deg,var(--celeste),var(--blue));
   display:grid; place-items:center; font-family:"Fraunces",serif; font-weight:600;
@@ -87,9 +79,7 @@ header{background:var(--navy); color:#fff; position:sticky; top:0; z-index:50;
 .brand-txt b{font-size:.9rem; letter-spacing:.02em}
 .brand-txt span{font-size:.66rem; color:#B9D2E8; letter-spacing:.06em; text-transform:uppercase}
 
-/* ---------- APDAE RAIL ---------- */
-.rail{max-width:780px; margin:0 auto; padding:.55rem 1rem .7rem; overflow-x:auto;
-  -webkit-overflow-scrolling:touch}
+.rail{max-width:780px; margin:0 auto; padding:.55rem 1rem .7rem; overflow-x:auto; -webkit-overflow-scrolling:touch}
 .rail ol{display:flex; gap:.4rem; list-style:none; margin:0; padding:0; min-width:max-content}
 .rail li{display:flex; align-items:center; gap:.4rem}
 .stage{display:flex; align-items:center; gap:.45rem; padding:.28rem .5rem; border-radius:999px;
@@ -102,23 +92,23 @@ header{background:var(--navy); color:#fff; position:sticky; top:0; z-index:50;
 .stage.active{background:#fff; color:var(--navy)}
 .stage.active .dot{background:var(--gold); color:#fff}
 
-/* ---------- LAYOUT ---------- */
 main{max-width:780px; margin:0 auto; padding:1rem 1rem 6.5rem}
 .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
   box-shadow:var(--shadow); padding:1.15rem 1.05rem; margin-bottom:1rem}
 .step-head{margin-bottom:.9rem}
 .step-head h2{font-size:1.45rem; margin:.15rem 0 .35rem}
 .lead{color:var(--muted); font-size:.95rem}
+.tool{display:inline-flex; gap:.4rem; align-items:center; font-size:.7rem; font-weight:700;
+  letter-spacing:.02em; color:var(--blue); background:var(--celeste-soft); border:1px solid #BFD9EF;
+  padding:.28rem .6rem; border-radius:999px; margin-bottom:.7rem}
 
-/* ---------- FORM ---------- */
 label{display:block; font-weight:600; font-size:.9rem; margin:.9rem 0 .3rem; color:var(--navy)}
 .hint{font-weight:400; color:var(--muted); font-size:.82rem}
 input[type=text], input[type=email], input[type=date], textarea, select{
   width:100%; font:inherit; color:var(--ink); background:#fff;
   border:1.5px solid var(--line); border-radius:10px; padding:.7rem .75rem}
-textarea{min-height:80px; resize:vertical}
-input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celeste);
-  box-shadow:0 0 0 3px var(--celeste-soft)}
+textarea{min-height:78px; resize:vertical}
+input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celeste); box-shadow:0 0 0 3px var(--celeste-soft)}
 .req{color:var(--bad)}
 .field-err{color:var(--bad); font-size:.8rem; margin-top:.3rem; display:none}
 .invalid input, .invalid textarea, .invalid select{border-color:var(--bad)}
@@ -126,10 +116,8 @@ input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celes
 .two{display:grid; gap:.6rem}
 @media(min-width:560px){ .two{grid-template-columns:1fr 1fr} }
 
-/* diagnostic rows */
 .diag{border:1px solid var(--line); border-radius:10px; overflow:hidden}
-.diag-row{display:flex; flex-direction:column; gap:.45rem; padding:.7rem .8rem;
-  border-bottom:1px solid var(--line)}
+.diag-row{display:flex; flex-direction:column; gap:.45rem; padding:.7rem .8rem; border-bottom:1px solid var(--line)}
 .diag-row:last-child{border-bottom:0}
 .diag-row .name{font-weight:600; font-size:.92rem; color:var(--navy)}
 .scale{display:flex; gap:.35rem}
@@ -147,7 +135,6 @@ input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celes
 .avg .num{font-family:"Fraunces",serif; font-size:1.9rem; color:var(--navy); line-height:1}
 .avg .txt{font-size:.86rem; color:var(--navy)}
 
-/* checkbox grid */
 .checks{display:grid; gap:.5rem; grid-template-columns:1fr}
 @media(min-width:520px){ .checks{grid-template-columns:1fr 1fr} }
 .chk{display:flex; align-items:flex-start; gap:.55rem; padding:.6rem .7rem; border:1.5px solid var(--line);
@@ -156,9 +143,10 @@ input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celes
 .chk span{font-size:.9rem}
 .chk:has(input:checked){border-color:var(--celeste); background:var(--celeste-soft)}
 
-/* repeatable blocks */
-.block{border:1px solid var(--line); border-radius:12px; padding:.85rem; margin-bottom:.7rem;
-  background:#FAFCFE; position:relative}
+.golden{border:1px solid var(--line); border-radius:12px; padding:.5rem .85rem .85rem; background:#FAFCFE}
+.golden .ring{font-family:"Fraunces",serif; font-size:.95rem; color:var(--gold); margin-top:.7rem}
+
+.block{border:1px solid var(--line); border-radius:12px; padding:.85rem; margin-bottom:.7rem; background:#FAFCFE; position:relative}
 .block .bh{display:flex; justify-content:space-between; align-items:center; margin-bottom:.2rem}
 .block .bh b{font-size:.82rem; letter-spacing:.05em; text-transform:uppercase; color:var(--celeste)}
 .rm{background:none; border:0; color:var(--bad); font-weight:600; font-size:.82rem; cursor:pointer; padding:.2rem}
@@ -170,17 +158,12 @@ blockquote{margin:1rem 0 0; padding:.7rem .9rem; border-left:3px solid var(--gol
   background:#FBF8F1; color:var(--navy); font-style:italic; font-size:.9rem; border-radius:0 8px 8px 0}
 blockquote small{display:block; font-style:normal; color:var(--muted); margin-top:.25rem}
 
-/* ---------- NAV BAR ---------- */
-.navbar{position:fixed; left:0; right:0; bottom:0; z-index:60; background:#fff;
-  border-top:1px solid var(--line); box-shadow:0 -6px 18px rgba(0,39,77,.06);
-  padding:.65rem 1rem calc(.65rem + env(safe-area-inset-bottom))}
+.navbar{position:fixed; left:0; right:0; bottom:0; z-index:60; background:#fff; border-top:1px solid var(--line);
+  box-shadow:0 -6px 18px rgba(0,39,77,.06); padding:.65rem 1rem calc(.65rem + env(safe-area-inset-bottom))}
 .navbar-inner{max-width:780px; margin:0 auto; display:flex; gap:.6rem; align-items:center}
-.progress{flex:1; height:8px; background:var(--paper); border-radius:999px; overflow:hidden;
-  border:1px solid var(--line)}
-.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--celeste));
-  transition:width .3s}
-.btn{font:inherit; font-weight:600; border-radius:10px; padding:.7rem 1.1rem; cursor:pointer;
-  border:1.5px solid transparent; white-space:nowrap}
+.progress{flex:1; height:8px; background:var(--paper); border-radius:999px; overflow:hidden; border:1px solid var(--line)}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--celeste)); transition:width .3s}
+.btn{font:inherit; font-weight:600; border-radius:10px; padding:.7rem 1.1rem; cursor:pointer; border:1.5px solid transparent; white-space:nowrap}
 .btn-primary{background:var(--navy); color:#fff}
 .btn-primary:hover{background:#013a72}
 .btn-ghost{background:#fff; color:var(--navy); border-color:var(--line)}
@@ -188,7 +171,6 @@ blockquote small{display:block; font-style:normal; color:var(--muted); margin-to
 .btn:disabled{opacity:.5; cursor:not-allowed}
 .btn-block{width:100%; justify-content:center; text-align:center}
 
-/* ---------- FINISH / STATUS ---------- */
 .status{border-radius:12px; padding:1rem; margin:.4rem 0 1rem; border:1px solid; font-size:.92rem}
 .status.info{background:var(--celeste-soft); border-color:#BFD9EF; color:var(--navy)}
 .status.ok{background:#E6F5EC; border-color:#B7E2C6; color:#0E6B37}
@@ -196,20 +178,17 @@ blockquote small{display:block; font-style:normal; color:var(--muted); margin-to
 .status b{display:block; margin-bottom:.2rem}
 .dl-row{display:grid; gap:.6rem; grid-template-columns:1fr}
 @media(min-width:520px){ .dl-row{grid-template-columns:1fr 1fr} }
-.spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.4);
-  border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:.4rem}
+.spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(0,39,77,.25);
+  border-top-color:var(--navy); border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:.4rem}
 @keyframes sp{to{transform:rotate(360deg)}}
 
-/* welcome */
 .welcome-kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin:.9rem 0}
 .kpi{background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:.6rem; text-align:center}
 .kpi b{display:block; font-family:"Fraunces",serif; color:var(--navy); font-size:1.3rem}
 .kpi small{color:var(--muted); font-size:.7rem; line-height:1.2; display:block}
 
 footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); font-size:.78rem; text-align:center}
-
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0}
 </style>
 </head>
 <body>
@@ -217,31 +196,25 @@ footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
 <header>
   <div class="head-inner">
     <div class="brand-mark">C</div>
-    <div class="brand-txt">
-      <b>CENTRUM PUCP</b>
-      <span>Business School</span>
-    </div>
+    <div class="brand-txt"><b>CENTRUM PUCP</b><span>Business School</span></div>
   </div>
-  <nav class="rail" aria-label="Ruta APDAE">
-    <ol id="rail"></ol>
-  </nav>
+  <nav class="rail" aria-label="Ruta APDAE"><ol id="rail"></ol></nav>
 </header>
 
 <main>
   <form id="wizard" novalidate>
 
-    <!-- STEP 0 · BIENVENIDA + DATOS -->
+    <!-- STEP 0 -->
     <section class="card step" data-step="0">
       <div class="step-head">
         <span class="eyebrow">Especialización · Gestión del Talento Humano</span>
         <h2>Seminario de Competencias</h2>
-        <p class="lead">Plan personal de desarrollo de competencias para el Analista de Gestión del Talento Humano. Completa cada etapa de la Ruta APDAE y al final recibes tu plan en PDF, en Word y una copia en tu correo.</p>
+        <p class="lead">Tu plan estratégico personal rumbo a la empleabilidad 2030. Recorre las cinco etapas de la Ruta APDAE con las herramientas del seminario. Al terminar recibes tu plan en PDF y en Word, y se envía a tu docente.</p>
       </div>
-
       <div class="welcome-kpis">
+        <div class="kpi"><b>10</b><small>Core Skills 2030 que evalúas</small></div>
         <div class="kpi"><b>5</b><small>etapas de la Ruta APDAE</small></div>
-        <div class="kpi"><b>10</b><small>competencias que evalúas</small></div>
-        <div class="kpi"><b>90</b><small>días de plan de acción</small></div>
+        <div class="kpi"><b>2030</b><small>horizonte de empleabilidad</small></div>
       </div>
 
       <label for="f-nombre">Nombres y apellidos <span class="req">*</span></label>
@@ -250,8 +223,7 @@ footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
 
       <div class="two">
         <div>
-          <label for="f-correo">Correo electrónico <span class="req">*</span>
-            <span class="hint">Aquí llega tu plan</span></label>
+          <label for="f-correo">Correo electrónico <span class="req">*</span> <span class="hint">recibes tu plan</span></label>
           <input type="email" id="f-correo" name="correo" autocomplete="email" inputmode="email" placeholder="tucorreo@ejemplo.com" required>
           <div class="field-err">Escribe un correo válido.</div>
         </div>
@@ -264,92 +236,108 @@ footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
       <label for="f-cargo">Cargo actual <span class="hint">(opcional)</span></label>
       <input type="text" id="f-cargo" name="cargo" placeholder="Ej. Analista de Talento Humano">
 
-      <blockquote>“Antes de ser líder, el éxito tiene que ver con crecer tú; cuando eres líder, el éxito tiene que ver con hacer crecer a los demás.”
-        <small>Jack Welch</small></blockquote>
+      <blockquote>“Un hombre que no planea con anticipación siempre encontrará problemas en su puerta.”
+        <small>Confucio</small></blockquote>
     </section>
 
-    <!-- STEP 1 · A · AUTOCONOCIMIENTO (DIAGNÓSTICO) -->
+    <!-- STEP 1 · A -->
     <section class="card step" data-step="1" hidden>
       <div class="step-head">
         <span class="eyebrow">A · Autoconocimiento</span>
         <h2>Diagnóstico de competencias</h2>
-        <p class="lead">Responde con honestidad, pensando en tu comportamiento habitual y no en tu intención. Escala: 1 muy por debajo, 3 aceptable, 5 fortaleza destacada.</p>
+        <span class="tool">Herramientas · Ventana de Johari (Luft &amp; Ingham, 1955) y Core Skills 2030 (WEF, 2025)</span>
+        <p class="lead">Empieza por tu área ciega: pide a alguien de confianza que te diga qué ve en ti que tú no ves. Luego evalúa tus competencias clave para 2030 pensando en tu conducta habitual. Escala: 1 muy por debajo, 3 aceptable, 5 fortaleza destacada.</p>
       </div>
+
+      <label for="f-johari">Mi área ciega (Ventana de Johari) <span class="hint">(opcional)</span></label>
+      <textarea id="f-johari" name="johari" placeholder="Lo que otros ven en mí y yo no había notado…"></textarea>
+
+      <label style="margin-top:1rem">Autoevaluación · Core Skills 2030</label>
       <div class="diag" id="diag"></div>
-      <div class="avg" id="avg" hidden>
-        <div class="num" id="avgNum">–</div>
-        <div class="txt" id="avgTxt"></div>
-      </div>
+      <div class="avg" id="avg" hidden><div class="num" id="avgNum">–</div><div class="txt" id="avgTxt"></div></div>
     </section>
 
-    <!-- STEP 2 · P · PROPÓSITO -->
+    <!-- STEP 2 · P -->
     <section class="card step" data-step="2" hidden>
       <div class="step-head">
         <span class="eyebrow">P · Propósito</span>
-        <h2>Identidad y propósito</h2>
-        <p class="lead">Elige los valores que no negocias como profesional del talento y redacta tu declaración personal.</p>
+        <h2>Mi propósito profesional</h2>
+        <span class="tool">Herramienta · Círculo Dorado (Sinek, 2009)</span>
+        <p class="lead">Empieza por el centro. Primero el porqué, luego el cómo y al final el qué. Así conectas tus motivaciones con lo que haces cada día.</p>
+      </div>
+      <div class="golden">
+        <div class="ring">¿Por qué?</div>
+        <label for="f-porque">Mi causa y mis motivaciones <span class="req">*</span> <span class="hint">¿por qué hago lo que hago?</span></label>
+        <textarea id="f-porque" name="porque" placeholder="Creo que… Mi propósito es…"></textarea>
+        <div class="field-err">Escribe tu porqué.</div>
+
+        <div class="ring">¿Cómo?</div>
+        <label for="f-como">Mi forma de lograrlo <span class="hint">principios y acciones que me distinguen</span></label>
+        <textarea id="f-como" name="como" placeholder="Lo hago a través de…"></textarea>
+
+        <div class="ring">¿Qué?</div>
+        <label for="f-que">Mi resultado visible <span class="hint">¿qué entrego o produzco?</span></label>
+        <textarea id="f-que" name="que" placeholder="El resultado de mi porqué es…"></textarea>
       </div>
 
-      <label>Mis valores clave <span class="hint">elige de 3 a 5</span></label>
-      <div class="checks" id="valores"></div>
+      <label for="f-vision">Mi hoja de ruta a 2030 <span class="hint">(opcional, en tiempo presente)</span></label>
+      <textarea id="f-vision" name="vision" placeholder="En 2030 soy un analista de talento que…"></textarea>
 
-      <label for="f-declaracion">Mi declaración de desarrollo <span class="req">*</span>
-        <span class="hint">Empieza con “Como analista de talento, mi propósito es…”</span></label>
-      <textarea id="f-declaracion" name="declaracion" placeholder="Como analista de talento, mi propósito es…"></textarea>
-      <div class="field-err">Escribe tu declaración de propósito.</div>
-
-      <label for="f-vision">Mi visión a tres años <span class="hint">(opcional, en tiempo presente)</span></label>
-      <textarea id="f-vision" name="vision" placeholder="En 2029 soy un analista de talento que…"></textarea>
-
-      <blockquote>“El ejemplo no es lo principal para influir en los demás; es lo único.”
-        <small>Albert Schweitzer</small></blockquote>
+      <blockquote>“La gente no compra lo que haces, compra por qué lo haces.”
+        <small>Simon Sinek</small></blockquote>
     </section>
 
-    <!-- STEP 3 · D · DIRECCIÓN -->
+    <!-- STEP 3 · D -->
     <section class="card step" data-step="3" hidden>
       <div class="step-head">
         <span class="eyebrow">D · Dirección</span>
         <h2>Objetivos de desarrollo</h2>
-        <p class="lead">Define de 1 a 3 objetivos con el marco SMARTER: específico, medible, alcanzable, relevante, con tiempo, evaluable y revisable.</p>
+        <span class="tool">Herramienta · Objetivos SMARTER</span>
+        <p class="lead">Define de 1 a 3 objetivos conectados con tus brechas del diagnóstico. Específico, medible, alcanzable, relevante, con tiempo, evaluable y revisable.</p>
       </div>
       <div id="objetivos"></div>
       <button type="button" class="add" id="addObjetivo">+ Agregar objetivo</button>
     </section>
 
-    <!-- STEP 4 · A · ACCIÓN -->
+    <!-- STEP 4 · A -->
     <section class="card step" data-step="4" hidden>
       <div class="step-head">
         <span class="eyebrow">A · Acción</span>
         <h2>Plan de acción y hábitos</h2>
-        <p class="lead">Modelo 70-20-10: el mayor aprendizaje viene de la experiencia (70), del acompañamiento (20) y de la formación (10).</p>
+        <span class="tool">Herramienta · Matriz de Eisenhower (Covey, 1989)</span>
+        <p class="lead">Clasifica cada acción según urgencia e importancia. Lo importante y no urgente es donde se construye tu desarrollo.</p>
       </div>
 
-      <label>Acciones de mi plan <span class="hint">indica 70, 20 o 10 en cada una</span></label>
+      <label>Mis acciones</label>
       <div id="acciones"></div>
       <button type="button" class="add" id="addAccion">+ Agregar acción</button>
 
-      <label style="margin-top:1.2rem">Hábitos que sostendré (30 · 60 · 90 días)
-        <span class="hint">elige pocos y consolídalos</span></label>
+      <label style="margin-top:1.2rem">Hábitos de alto rendimiento y bienestar
+        <span class="hint">elige pocos y consolídalos (Sesión 2)</span></label>
       <div class="checks" id="habitos"></div>
 
-      <blockquote>“El liderazgo y el aprendizaje son indispensables el uno para el otro.”
-        <small>John F. Kennedy</small></blockquote>
+      <blockquote>“Lo que es urgente rara vez es importante y lo que es importante rara vez es urgente.”
+        <small>Dwight D. Eisenhower</small></blockquote>
     </section>
 
-    <!-- STEP 5 · E · EVOLUCIÓN -->
+    <!-- STEP 5 · E -->
     <section class="card step" data-step="5" hidden>
       <div class="step-head">
         <span class="eyebrow">E · Evolución</span>
-        <h2>Compromiso y seguimiento</h2>
-        <p class="lead">El compromiso es el puente entre la reflexión y la acción. Revísalo cada mes.</p>
+        <h2>Autogestión y compromiso</h2>
+        <span class="tool">Herramienta · Inteligencia Emocional (Goleman, 2005)</span>
+        <p class="lead">La autogestión emocional sostiene tus decisiones bajo presión. Cierra con un compromiso que revisarás cada mes.</p>
       </div>
+
+      <label for="f-emocion">Una situación de presión y cómo regularé mi emoción <span class="hint">(opcional)</span></label>
+      <textarea id="f-emocion" name="emocion" placeholder="Cuando siento presión por… voy a…"></textarea>
 
       <label for="f-fortalecer">Tres comportamientos que fortaleceré <span class="req">*</span></label>
       <input type="text" id="f-fortalecer" name="fortalecer" placeholder="Ej. escucha activa, uso de datos, feedback">
       <div class="field-err">Indica los comportamientos que fortalecerás.</div>
 
       <label for="f-dejar">Dos comportamientos que dejaré de realizar</label>
-      <input type="text" id="f-dejar" name="dejar" placeholder="Ej. resolver todo yo, postergar conversaciones">
+      <input type="text" id="f-dejar" name="dejar" placeholder="Ej. postergar conversaciones, asumir tareas ajenas">
 
       <label for="f-conversacion">Una conversación pendiente que asumiré</label>
       <input type="text" id="f-conversacion" name="conversacion" placeholder="Ej. feedback de desarrollo con…">
@@ -357,32 +345,32 @@ footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
       <div class="two">
         <div>
           <label for="f-compEquipo">Un compromiso con mi equipo</label>
-          <input type="text" id="f-compEquipo" name="compEquipo" placeholder="Ej. dar feedback quincenal">
+          <input type="text" id="f-compEquipo" name="compEquipo" placeholder="Ej. feedback quincenal">
         </div>
         <div>
           <label for="f-compProposito">Un compromiso con mi propósito</label>
-          <input type="text" id="f-compProposito" name="compProposito" placeholder="Ej. seguir formándome en people analytics">
+          <input type="text" id="f-compProposito" name="compProposito" placeholder="Ej. certificarme en people analytics">
         </div>
       </div>
 
       <label for="f-revision">Cómo daré seguimiento cada mes <span class="hint">semáforo: verde, amarillo, rojo</span></label>
-      <textarea id="f-revision" name="revision" placeholder="Revisaré mi avance el primer lunes de cada mes usando el semáforo…"></textarea>
+      <textarea id="f-revision" name="revision" placeholder="Reviso el primer lunes de cada mes con el semáforo…"></textarea>
 
-      <blockquote>“Cae siete veces, levántate ocho.”
-        <small>Proverbio japonés</small></blockquote>
+      <blockquote>“Los pensamientos son el lenguaje del cerebro y los sentimientos el lenguaje del cuerpo.”
+        <small>Joe Dispenza</small></blockquote>
     </section>
 
-    <!-- STEP 6 · GENERAR Y ENVIAR -->
+    <!-- STEP 6 -->
     <section class="card step" data-step="6" hidden>
       <div class="step-head">
         <span class="eyebrow">Cierre</span>
         <h2>Tu plan está listo</h2>
-        <p class="lead">Genera tu documento y envíalo a tu correo. También queda una copia para el docente.</p>
+        <p class="lead">Genera tu documento y envíalo. Tu plan se descarga en tu dispositivo y llega a tu docente.</p>
       </div>
 
       <div id="statusBox" class="status info">
-        <b>Revisa tus datos</b>
-        Al presionar “Generar y enviar” se descargará tu plan y se enviará una copia a tu correo. Si el correo no llega, revisa la carpeta de spam.
+        <b>Antes de enviar</b>
+        Al presionar el botón, tu plan se descarga en PDF y se envía a tu docente. Si tu carpeta de spam existe, revísala por si acaso.
       </div>
 
       <button type="button" class="btn btn-primary btn-block" id="btnSend">Generar y enviar mi plan</button>
@@ -392,8 +380,8 @@ footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
         <button type="button" class="btn btn-ghost btn-block" id="btnWord">Descargar Word</button>
       </div>
 
-      <blockquote>“Un líder conoce el camino, recorre el camino y muestra el camino.”
-        <small>John C. Maxwell</small></blockquote>
+      <blockquote>“Cae siete veces, levántate ocho.”
+        <small>Proverbio japonés</small></blockquote>
     </section>
 
   </form>
@@ -411,37 +399,45 @@ footer{max-width:780px; margin:0 auto; padding:0 1rem 2rem; color:var(--muted); 
   </div>
 </div>
 
-<!-- Contenedor oculto para renderizar el PDF -->
 <div id="printArea" style="position:fixed; left:-9999px; top:0; width:794px; background:#fff"></div>
 
 <script>
 /* ============================================================
-   DATOS DE CONTENIDO
+   CONTENIDO · herramientas del seminario (Día 1)
 ============================================================ */
 const COMPETENCIAS = [
-  "Autoconocimiento",
-  "Comunicación efectiva",
-  "Escucha activa y empatía",
-  "Analítica de datos de talento (people analytics)",
-  "Gestión del desempeño",
-  "Atracción y selección de talento",
-  "Desarrollo y capacitación",
-  "Trabajo en equipo y colaboración",
-  "Adaptabilidad y gestión del cambio",
-  "Ética y confidencialidad"
-];
-const VALORES = [
-  "Integridad","Confidencialidad","Respeto por las personas","Equidad",
-  "Aprendizaje continuo","Orientación al servicio","Colaboración","Orientación a resultados"
+  "Pensamiento analítico",
+  "Pensamiento creativo",
+  "Resiliencia, flexibilidad y agilidad",
+  "Curiosidad y aprendizaje continuo",
+  "Motivación y autoconocimiento",
+  "Empatía y escucha activa",
+  "Liderazgo e influencia social",
+  "Gestión del talento",
+  "Alfabetización tecnológica e IA",
+  "Pensamiento sistémico"
 ];
 const HABITOS = [
-  "Reflexión diaria (5 min)","Escucha activa","Decidir con datos","Solicitar feedback",
-  "Reconocimiento al equipo","Documentación ordenada","Priorización semanal",
-  "Conversaciones de desarrollo","Actualización profesional","Gestión emocional"
+  "Respiración consciente (box breathing, 5 min)",
+  "Bloques de foco sin interrupciones",
+  "Priorización con matriz de Eisenhower",
+  "Pausas activas durante la jornada",
+  "Higiene del sueño",
+  "Aprendizaje continuo (30 min al día)",
+  "Registro de logros diarios",
+  "Desconexión digital",
+  "Actividad física",
+  "Reflexión y gratitud"
+];
+const CUADRANTES = [
+  {v:"Hacer",     t:"Hacer · urgente e importante"},
+  {v:"Programar", t:"Programar · importante, no urgente"},
+  {v:"Delegar",   t:"Delegar · urgente, no importante"},
+  {v:"Eliminar",  t:"Eliminar · ni urgente ni importante"}
 ];
 
 /* ============================================================
-   ESTADO Y NAVEGACIÓN
+   NAVEGACIÓN · Ruta APDAE
 ============================================================ */
 const STAGES = [
   {k:"A", t:"Autoconocimiento"},
@@ -453,29 +449,26 @@ const STAGES = [
 const STEP_TO_STAGE = {1:0, 2:1, 3:2, 4:3, 5:4};
 const TOTAL_STEPS = 7;
 let current = 0;
-const $ = (s,c=document)=>c.querySelector(s);
+const $  = (s,c=document)=>c.querySelector(s);
 const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
 
-/* ---- Ruta APDAE (rail) ---- */
 function renderRail(){
   const ol = $("#rail"); ol.innerHTML = "";
   const activeStage = STEP_TO_STAGE[current];
-  STAGES.forEach((st, i)=>{
-    const li = document.createElement("li");
+  STAGES.forEach((st,i)=>{
     let cls = "stage";
     if(activeStage === i) cls += " active";
     else if(activeStage !== undefined && i < activeStage) cls += " done";
     else if(current === TOTAL_STEPS-1) cls += " done";
+    const li = document.createElement("li");
     li.innerHTML = `<div class="${cls}"><span class="dot">${st.k}</span><small>${st.t}</small></div>`;
     ol.appendChild(li);
   });
 }
-
-/* ---- Mostrar paso ---- */
 function showStep(n){
   current = Math.max(0, Math.min(TOTAL_STEPS-1, n));
   $$(".step").forEach(s=>{ s.hidden = (+s.dataset.step !== current); });
-  $("#bar").style.width = ((current)/(TOTAL_STEPS-1)*100) + "%";
+  $("#bar").style.width = (current/(TOTAL_STEPS-1)*100) + "%";
   $("#btnPrev").style.visibility = current===0 ? "hidden" : "visible";
   const next = $("#btnNext");
   next.textContent = current===TOTAL_STEPS-2 ? "Revisar" : "Siguiente";
@@ -486,237 +479,172 @@ function showStep(n){
 }
 
 /* ============================================================
-   RENDER DE CAMPOS DINÁMICOS
+   CAMPOS DINÁMICOS
 ============================================================ */
 function renderDiag(){
   const box = $("#diag"); box.innerHTML = "";
   COMPETENCIAS.forEach((c,i)=>{
+    let scale = `<div class="scale" role="radiogroup" aria-label="${c}">`;
+    for(let v=1; v<=5; v++) scale += `<label><input type="radio" name="diag${i}" value="${v}"><span>${v}</span></label>`;
+    scale += `</div>`;
     const row = document.createElement("div");
     row.className = "diag-row";
-    let scale = `<div class="scale" role="radiogroup" aria-label="${c}">`;
-    for(let v=1; v<=5; v++){
-      scale += `<label><input type="radio" name="diag${i}" value="${v}"><span>${v}</span></label>`;
-    }
-    scale += `</div>`;
     row.innerHTML = `<div class="name">${i+1}. ${c}</div>${scale}`;
     box.appendChild(row);
   });
   box.addEventListener("change", updateAvg);
 }
 function updateAvg(){
-  let sum=0, count=0;
-  COMPETENCIAS.forEach((_,i)=>{
-    const sel = $(`input[name="diag${i}"]:checked`);
-    if(sel){ sum += +sel.value; count++; }
-  });
-  const box = $("#avg");
-  if(count===0){ box.hidden = true; return; }
-  const avg = sum/count;
-  box.hidden = false;
-  $("#avgNum").textContent = avg.toFixed(2);
-  let msg;
-  if(avg>=4){ msg = "Perfil consolidado. Profundiza tus fortalezas y ayuda a otros a crecer."; }
-  else if(avg>=3){ msg = "Base sólida con oportunidades claras. Prioriza dos o tres competencias."; }
-  else { msg = "Define pocas prioridades y hábitos frecuentes antes de abarcar más."; }
+  let sum=0,count=0;
+  COMPETENCIAS.forEach((_,i)=>{ const s=$(`input[name="diag${i}"]:checked`); if(s){sum+=+s.value;count++;} });
+  const box=$("#avg");
+  if(count===0){ box.hidden=true; return; }
+  const avg=sum/count; box.hidden=false;
+  $("#avgNum").textContent=avg.toFixed(2);
+  let msg = avg>=4 ? "Perfil consolidado. Profundiza tus fortalezas y comparte con otros."
+          : avg>=3 ? "Base sólida con oportunidades claras. Prioriza dos o tres competencias."
+                   : "Define pocas prioridades y hábitos frecuentes antes de abarcar más.";
   $("#avgTxt").innerHTML = `<b>Promedio de ${count}/${COMPETENCIAS.length} competencias.</b> ${msg}`;
 }
-
 function renderChecks(id, arr, name){
-  const box = $(id); box.innerHTML = "";
-  arr.forEach((v,i)=>{
-    const l = document.createElement("label");
-    l.className = "chk";
-    l.innerHTML = `<input type="checkbox" name="${name}" value="${v}"><span>${v}</span>`;
-    box.appendChild(l);
-  });
+  const box=$(id); box.innerHTML="";
+  arr.forEach(v=>{ const l=document.createElement("label"); l.className="chk";
+    l.innerHTML=`<input type="checkbox" name="${name}" value="${v}"><span>${v}</span>`; box.appendChild(l); });
 }
-
 let objCount=0, accCount=0;
 function addObjetivo(){
-  if(objCount>=3) return;
-  objCount++;
-  const wrap = document.createElement("div");
-  wrap.className = "block";
-  wrap.innerHTML = `
-    <div class="bh"><b>Objetivo ${objCount}</b>
-      ${objCount>1 ? '<button type="button" class="rm">Quitar</button>' : ''}</div>
+  if(objCount>=3) return; objCount++;
+  const w=document.createElement("div"); w.className="block";
+  w.innerHTML=`<div class="bh"><b>Objetivo ${objCount}</b>${objCount>1?'<button type="button" class="rm">Quitar</button>':''}</div>
     <label>Objetivo (verbo + resultado)</label>
-    <input type="text" data-f="objetivo" placeholder="Ej. Fortalecer mi escucha activa en las entrevistas">
+    <input type="text" data-f="objetivo" placeholder="Ej. Fortalecer mi pensamiento analítico con datos de talento">
     <div class="two">
-      <div><label>Competencia asociada</label>
-        <input type="text" data-f="competencia" placeholder="Ej. Escucha activa"></div>
-      <div><label>Plazo</label>
-        <input type="text" data-f="plazo" placeholder="Ej. 90 días"></div>
+      <div><label>Competencia asociada</label><input type="text" data-f="competencia" placeholder="Ej. Pensamiento analítico"></div>
+      <div><label>Plazo</label><input type="text" data-f="plazo" placeholder="Ej. 90 días"></div>
     </div>
     <label>Indicador y meta</label>
-    <input type="text" data-f="meta" placeholder="Ej. 100% de entrevistas con resumen validado">`;
-  wrap.querySelector(".rm")?.addEventListener("click", ()=>{ wrap.remove(); renumber("#objetivos","Objetivo"); });
-  $("#objetivos").appendChild(wrap);
+    <input type="text" data-f="meta" placeholder="Ej. 1 tablero de indicadores en uso">`;
+  w.querySelector(".rm")?.addEventListener("click",()=>{w.remove(); renumber("#objetivos","Objetivo");});
+  $("#objetivos").appendChild(w);
   if(objCount>=3) $("#addObjetivo").style.display="none";
 }
 function addAccion(){
-  if(accCount>=4) return;
-  accCount++;
-  const wrap = document.createElement("div");
-  wrap.className = "block";
-  wrap.innerHTML = `
-    <div class="bh"><b>Acción ${accCount}</b>
-      ${accCount>1 ? '<button type="button" class="rm">Quitar</button>' : ''}</div>
+  if(accCount>=4) return; accCount++;
+  const opts = CUADRANTES.map(c=>`<option value="${c.v}">${c.t}</option>`).join("");
+  const w=document.createElement("div"); w.className="block";
+  w.innerHTML=`<div class="bh"><b>Acción ${accCount}</b>${accCount>1?'<button type="button" class="rm">Quitar</button>':''}</div>
     <label>¿Qué haré?</label>
-    <input type="text" data-f="accion" placeholder="Ej. Reuniones mensuales de desarrollo con cada colaborador">
+    <input type="text" data-f="accion" placeholder="Ej. Bloque semanal de foco para analizar datos de rotación">
     <div class="two">
-      <div><label>Tipo de aprendizaje</label>
-        <select data-f="tipo">
-          <option value="70">70 · Experiencia y retos</option>
-          <option value="20">20 · Acompañamiento y feedback</option>
-          <option value="10">10 · Formación y lecturas</option>
-        </select></div>
-      <div><label>Indicador de avance</label>
-        <input type="text" data-f="indicador" placeholder="Ej. 3 sesiones realizadas"></div>
+      <div><label>Cuadrante de Eisenhower</label><select data-f="cuadrante">${opts}</select></div>
+      <div><label>Indicador de avance</label><input type="text" data-f="indicador" placeholder="Ej. 1 análisis por semana"></div>
     </div>`;
-  wrap.querySelector(".rm")?.addEventListener("click", ()=>{ wrap.remove(); renumber("#acciones","Acción"); });
-  $("#acciones").appendChild(wrap);
+  w.querySelector(".rm")?.addEventListener("click",()=>{w.remove(); renumber("#acciones","Acción");});
+  $("#acciones").appendChild(w);
   if(accCount>=4) $("#addAccion").style.display="none";
 }
-function renumber(sel, label){
-  const blocks = $$(sel+" .block");
-  if(sel==="#objetivos"){ objCount=blocks.length; $("#addObjetivo").style.display = objCount>=3?"none":"block"; }
-  else { accCount=blocks.length; $("#addAccion").style.display = accCount>=4?"none":"block"; }
-  blocks.forEach((b,i)=> b.querySelector(".bh b").textContent = `${label} ${i+1}`);
+function renumber(sel,label){
+  const blocks=$$(sel+" .block");
+  if(sel==="#objetivos"){ objCount=blocks.length; $("#addObjetivo").style.display=objCount>=3?"none":"block"; }
+  else { accCount=blocks.length; $("#addAccion").style.display=accCount>=4?"none":"block"; }
+  blocks.forEach((b,i)=> b.querySelector(".bh b").textContent=`${label} ${i+1}`);
 }
 
 /* ============================================================
    VALIDACIÓN
 ============================================================ */
-function markInvalid(inputEl, bad){
-  const field = inputEl.closest("label")?.parentElement || inputEl.parentElement;
-  const container = inputEl.closest(".two > div, .step, .card") ;
-  // toggle on the immediate wrapper that holds .field-err
-  const wrap = inputEl.parentElement;
-  wrap.classList.toggle("invalid", bad);
-}
 function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-
 function validateStep(n){
-  let ok = true;
-  const need = [];
-  if(n===0){
-    need.push([$("#f-nombre"), v=>v.trim().length>1]);
-    need.push([$("#f-correo"), v=>validEmail(v.trim())]);
-  }
-  if(n===2){
-    need.push([$("#f-declaracion"), v=>v.trim().length>3]);
-  }
-  if(n===5){
-    need.push([$("#f-fortalecer"), v=>v.trim().length>2]);
-  }
-  need.forEach(([el,test])=>{
-    const good = test(el.value);
-    el.parentElement.classList.toggle("invalid", !good);
-    if(!good) ok=false;
-  });
+  let ok=true; const need=[];
+  if(n===0){ need.push([$("#f-nombre"),v=>v.trim().length>1]); need.push([$("#f-correo"),v=>validEmail(v.trim())]); }
+  if(n===2){ need.push([$("#f-porque"),v=>v.trim().length>3]); }
+  if(n===5){ need.push([$("#f-fortalecer"),v=>v.trim().length>2]); }
+  need.forEach(([el,test])=>{ const good=test(el.value); el.parentElement.classList.toggle("invalid",!good); if(!good) ok=false; });
   return ok;
 }
 
 /* ============================================================
-   RECOLECCIÓN DE DATOS
+   RECOLECCIÓN
 ============================================================ */
 function collect(){
-  const d = {
-    nombre: $("#f-nombre").value.trim(),
-    correo: $("#f-correo").value.trim(),
-    org: $("#f-org").value.trim(),
-    cargo: $("#f-cargo").value.trim(),
-    declaracion: $("#f-declaracion").value.trim(),
-    vision: $("#f-vision").value.trim(),
-    fortalecer: $("#f-fortalecer").value.trim(),
-    dejar: $("#f-dejar").value.trim(),
-    conversacion: $("#f-conversacion").value.trim(),
-    compEquipo: $("#f-compEquipo").value.trim(),
-    compProposito: $("#f-compProposito").value.trim(),
-    revision: $("#f-revision").value.trim(),
-    diag: [], avg: null,
-    valores: $$('input[name="valores"]:checked').map(i=>i.value),
-    habitos: $$('input[name="habitos"]:checked').map(i=>i.value),
-    objetivos: [], acciones: []
+  const d={
+    nombre:$("#f-nombre").value.trim(), correo:$("#f-correo").value.trim(),
+    org:$("#f-org").value.trim(), cargo:$("#f-cargo").value.trim(),
+    johari:$("#f-johari").value.trim(),
+    porque:$("#f-porque").value.trim(), como:$("#f-como").value.trim(), que:$("#f-que").value.trim(),
+    vision:$("#f-vision").value.trim(),
+    emocion:$("#f-emocion").value.trim(),
+    fortalecer:$("#f-fortalecer").value.trim(), dejar:$("#f-dejar").value.trim(),
+    conversacion:$("#f-conversacion").value.trim(), compEquipo:$("#f-compEquipo").value.trim(),
+    compProposito:$("#f-compProposito").value.trim(), revision:$("#f-revision").value.trim(),
+    diag:[], avg:null,
+    habitos:$$('input[name="habitos"]:checked').map(i=>i.value),
+    objetivos:[], acciones:[]
   };
   let sum=0,c=0;
-  COMPETENCIAS.forEach((name,i)=>{
-    const sel = $(`input[name="diag${i}"]:checked`);
-    const val = sel ? +sel.value : null;
-    d.diag.push({name, val});
-    if(val){ sum+=val; c++; }
-  });
-  d.avg = c ? (sum/c) : null;
-  $$("#objetivos .block").forEach(b=>{
-    d.objetivos.push({
-      objetivo: b.querySelector('[data-f="objetivo"]').value.trim(),
-      competencia: b.querySelector('[data-f="competencia"]').value.trim(),
-      plazo: b.querySelector('[data-f="plazo"]').value.trim(),
-      meta: b.querySelector('[data-f="meta"]').value.trim()
-    });
-  });
-  $$("#acciones .block").forEach(b=>{
-    d.acciones.push({
-      accion: b.querySelector('[data-f="accion"]').value.trim(),
-      tipo: b.querySelector('[data-f="tipo"]').value,
-      indicador: b.querySelector('[data-f="indicador"]').value.trim()
-    });
-  });
+  COMPETENCIAS.forEach((name,i)=>{ const s=$(`input[name="diag${i}"]:checked`); const val=s?+s.value:null;
+    d.diag.push({name,val}); if(val){sum+=val;c++;} });
+  d.avg = c ? sum/c : null;
+  $$("#objetivos .block").forEach(b=> d.objetivos.push({
+    objetivo:b.querySelector('[data-f="objetivo"]').value.trim(),
+    competencia:b.querySelector('[data-f="competencia"]').value.trim(),
+    plazo:b.querySelector('[data-f="plazo"]').value.trim(),
+    meta:b.querySelector('[data-f="meta"]').value.trim() }));
+  $$("#acciones .block").forEach(b=> d.acciones.push({
+    accion:b.querySelector('[data-f="accion"]').value.trim(),
+    cuadrante:b.querySelector('[data-f="cuadrante"]').value,
+    indicador:b.querySelector('[data-f="indicador"]').value.trim() }));
   d.fecha = new Date().toLocaleDateString("es-PE",{day:"2-digit",month:"long",year:"numeric"});
   return d;
 }
 
 /* ============================================================
-   CONSTRUCCIÓN DEL DOCUMENTO
+   DOCUMENTO
 ============================================================ */
-function esc(s){ return (s||"").replace(/[&<>]/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;" }[m])); }
-function interp(avg){
-  if(avg==null) return "";
-  if(avg>=4) return "Perfil consolidado.";
-  if(avg>=3) return "Base sólida con oportunidades claras.";
-  return "Prioriza pocas competencias y hábitos frecuentes.";
-}
+function esc(s){ return (s||"").replace(/[&<>]/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;" }[m])); }
+function interp(avg){ if(avg==null) return ""; if(avg>=4) return "Perfil consolidado."; if(avg>=3) return "Base sólida con oportunidades claras."; return "Prioriza pocas competencias y hábitos frecuentes."; }
 
 function buildHTML(d){
-  const diagRows = d.diag.map(x=>`<tr><td>${esc(x.name)}</td><td style="text-align:center">${x.val ?? "-"}</td></tr>`).join("");
-  const objRows = d.objetivos.filter(o=>o.objetivo).map((o,i)=>`
-    <tr><td>${i+1}</td><td>${esc(o.objetivo)}</td><td>${esc(o.competencia)}</td>
-    <td>${esc(o.meta)}</td><td>${esc(o.plazo)}</td></tr>`).join("") || `<tr><td colspan="5">—</td></tr>`;
-  const accRows = d.acciones.filter(a=>a.accion).map(a=>`
-    <tr><td style="text-align:center"><b>${a.tipo}</b></td><td>${esc(a.accion)}</td><td>${esc(a.indicador)}</td></tr>`).join("")
-    || `<tr><td colspan="3">—</td></tr>`;
-  const list = (arr)=> arr.length ? "<ul>"+arr.map(v=>`<li>${esc(v)}</li>`).join("")+"</ul>" : "<p>—</p>";
-
+  const diagRows=d.diag.map(x=>`<tr><td>${esc(x.name)}</td><td style="text-align:center">${x.val ?? "-"}</td></tr>`).join("");
+  const objRows=d.objetivos.filter(o=>o.objetivo).map((o,i)=>`<tr><td>${i+1}</td><td>${esc(o.objetivo)}</td><td>${esc(o.competencia)}</td><td>${esc(o.meta)}</td><td>${esc(o.plazo)}</td></tr>`).join("")||`<tr><td colspan="5">—</td></tr>`;
+  const accRows=d.acciones.filter(a=>a.accion).map(a=>`<tr><td><b>${esc(a.cuadrante)}</b></td><td>${esc(a.accion)}</td><td>${esc(a.indicador)}</td></tr>`).join("")||`<tr><td colspan="3">—</td></tr>`;
+  const list=arr=> arr.length ? "<ul>"+arr.map(v=>`<li>${esc(v)}</li>`).join("")+"</ul>" : "<p>—</p>";
   return `
   <div class="doc">
-    <div class="doc-head">
-      <div class="dm">C</div>
+    <div class="doc-head"><div class="dm">C</div>
       <div><div class="dh1">CENTRUM PUCP · Business School</div>
-      <div class="dh2">Especialización en Analista de Gestión del Talento Humano</div></div>
-    </div>
+      <div class="dh2">Especialización en Analista de Gestión del Talento Humano</div></div></div>
     <h1>Plan de Desarrollo de Competencias</h1>
+    <p class="sub">Seminario de Competencias · Empleabilidad 2030</p>
     <table class="meta"><tr><td><b>Participante:</b> ${esc(d.nombre)}</td><td><b>Fecha:</b> ${esc(d.fecha)}</td></tr>
     <tr><td><b>Correo:</b> ${esc(d.correo)}</td><td><b>Cargo:</b> ${esc(d.cargo)||"—"}</td></tr>
     ${d.org?`<tr><td colspan="2"><b>Organización:</b> ${esc(d.org)}</td></tr>`:""}</table>
 
-    <h2>1 · Autoconocimiento — Diagnóstico</h2>
+    <h2>1 · Autoconocimiento</h2>
+    <p class="tag">Ventana de Johari (Luft &amp; Ingham, 1955) y Core Skills 2030 (WEF, 2025)</p>
+    ${d.johari?`<p><b>Mi área ciega:</b> ${esc(d.johari)}</p>`:""}
     <table><thead><tr><th>Competencia</th><th style="width:90px">Nivel (1-5)</th></tr></thead><tbody>${diagRows}</tbody></table>
     ${d.avg!=null?`<p class="res"><b>Promedio: ${d.avg.toFixed(2)}.</b> ${interp(d.avg)}</p>`:""}
 
-    <h2>2 · Propósito — Identidad</h2>
-    <p><b>Valores clave:</b> ${d.valores.length?esc(d.valores.join(", ")):"—"}</p>
-    <p><b>Declaración:</b> ${esc(d.declaracion)||"—"}</p>
-    ${d.vision?`<p><b>Visión a tres años:</b> ${esc(d.vision)}</p>`:""}
+    <h2>2 · Propósito</h2>
+    <p class="tag">Círculo Dorado (Sinek, 2009)</p>
+    <p><b>¿Por qué?</b> ${esc(d.porque)||"—"}</p>
+    <p><b>¿Cómo?</b> ${esc(d.como)||"—"}</p>
+    <p><b>¿Qué?</b> ${esc(d.que)||"—"}</p>
+    ${d.vision?`<p><b>Hoja de ruta a 2030:</b> ${esc(d.vision)}</p>`:""}
 
-    <h2>3 · Dirección — Objetivos (SMARTER)</h2>
+    <h2>3 · Dirección</h2>
+    <p class="tag">Objetivos SMARTER</p>
     <table><thead><tr><th style="width:24px">#</th><th>Objetivo</th><th>Competencia</th><th>Meta</th><th>Plazo</th></tr></thead><tbody>${objRows}</tbody></table>
 
-    <h2>4 · Acción — Plan 70-20-10 y hábitos</h2>
-    <table><thead><tr><th style="width:44px">Tipo</th><th>Acción</th><th>Indicador</th></tr></thead><tbody>${accRows}</tbody></table>
-    <p><b>Hábitos (30·60·90 días):</b></p>${list(d.habitos)}
+    <h2>4 · Acción</h2>
+    <p class="tag">Matriz de Eisenhower (Covey, 1989)</p>
+    <table><thead><tr><th style="width:80px">Cuadrante</th><th>Acción</th><th>Indicador</th></tr></thead><tbody>${accRows}</tbody></table>
+    <p><b>Hábitos de alto rendimiento y bienestar:</b></p>${list(d.habitos)}
 
-    <h2>5 · Evolución — Compromiso y seguimiento</h2>
+    <h2>5 · Evolución</h2>
+    <p class="tag">Inteligencia Emocional (Goleman, 2005)</p>
+    ${d.emocion?`<p><b>Autogestión bajo presión:</b> ${esc(d.emocion)}</p>`:""}
     <p><b>Fortaleceré:</b> ${esc(d.fortalecer)||"—"}</p>
     <p><b>Dejaré de hacer:</b> ${esc(d.dejar)||"—"}</p>
     <p><b>Conversación pendiente:</b> ${esc(d.conversacion)||"—"}</p>
@@ -728,15 +656,16 @@ function buildHTML(d){
     <p class="foot">CENTRUM PUCP Business School · Seminario de Competencias · 2026</p>
   </div>`;
 }
-
 const DOC_CSS = `
   .doc{font-family:Georgia,'Times New Roman',serif; color:#0B1D33; padding:40px 44px; width:794px}
-  .doc-head{display:flex; align-items:center; gap:12px; border-bottom:3px solid #B08D3E; padding-bottom:10px; margin-bottom:18px}
+  .doc-head{display:flex; align-items:center; gap:12px; border-bottom:3px solid #B08D3E; padding-bottom:10px; margin-bottom:16px}
   .dm{width:36px;height:36px;border-radius:7px;background:#00274D;color:#fff;display:grid;place-items:center;font-weight:700;font-family:Georgia,serif}
   .dh1{font-weight:700;color:#00274D;font-size:14px}
   .dh2{font-size:11px;color:#5A6B7C;text-transform:uppercase;letter-spacing:.06em}
-  .doc h1{font-size:24px;color:#00274D;margin:0 0 12px}
-  .doc h2{font-size:15px;color:#0B5FA5;margin:22px 0 8px;border-bottom:1px solid #D3E0EC;padding-bottom:4px}
+  .doc h1{font-size:24px;color:#00274D;margin:0 0 2px}
+  .doc .sub{font-size:12px;color:#0B5FA5;margin:0 0 12px;font-style:italic}
+  .doc h2{font-size:15px;color:#0B5FA5;margin:22px 0 2px;border-bottom:1px solid #D3E0EC;padding-bottom:4px}
+  .doc .tag{font-size:10.5px;color:#5A6B7C;margin:2px 0 8px;text-transform:uppercase;letter-spacing:.04em}
   .doc p{font-size:12.5px;line-height:1.5;margin:0 0 7px}
   .doc table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:11.5px}
   .doc th,.doc td{border:1px solid #C9D8E6;padding:5px 7px;text-align:left;vertical-align:top}
@@ -744,44 +673,46 @@ const DOC_CSS = `
   .doc table.meta,.doc table.meta td{border:0;font-size:12px;padding:2px 0;width:50%}
   .doc ul{margin:2px 0 8px 18px;padding:0;font-size:12.5px}
   .doc .res{background:#DCEBF7;border-left:3px solid #2E86C1;padding:7px 10px;font-size:12.5px}
-  .doc .firma{margin-top:34px;display:flex;gap:12px;align-items:flex-end}
+  .doc .firma{margin-top:32px;display:flex;gap:12px;align-items:flex-end}
   .doc .firma .fl{width:200px;border-bottom:1px solid #0B1D33;height:1px;margin-bottom:20px}
-  .doc .foot{margin-top:26px;text-align:center;color:#5A6B7C;font-size:10.5px;border-top:1px solid #D3E0EC;padding-top:8px}
+  .doc .foot{margin-top:24px;text-align:center;color:#5A6B7C;font-size:10.5px;border-top:1px solid #D3E0EC;padding-top:8px}
 `;
-
 function buildText(d){
   const L=[];
   L.push("PLAN DE DESARROLLO DE COMPETENCIAS");
-  L.push("CENTRUM PUCP Business School");
+  L.push("CENTRUM PUCP Business School - Seminario de Competencias (Empleabilidad 2030)");
   L.push("Especializacion en Analista de Gestion del Talento Humano");
-  L.push("=".repeat(52));
+  L.push("=".repeat(56));
   L.push(`Participante: ${d.nombre}`);
   L.push(`Correo: ${d.correo}`);
   if(d.cargo) L.push(`Cargo: ${d.cargo}`);
   if(d.org) L.push(`Organizacion: ${d.org}`);
   L.push(`Fecha: ${d.fecha}`);
   L.push("");
-  L.push("1. AUTOCONOCIMIENTO - DIAGNOSTICO");
+  L.push("1. AUTOCONOCIMIENTO (Johari + Core Skills 2030)");
+  if(d.johari) L.push(`   Area ciega: ${d.johari}`);
   d.diag.forEach(x=> L.push(`   - ${x.name}: ${x.val ?? "-"}`));
   if(d.avg!=null) L.push(`   Promedio: ${d.avg.toFixed(2)}. ${interp(d.avg)}`);
   L.push("");
-  L.push("2. PROPOSITO - IDENTIDAD");
-  L.push(`   Valores: ${d.valores.join(", ") || "-"}`);
-  L.push(`   Declaracion: ${d.declaracion || "-"}`);
-  if(d.vision) L.push(`   Vision a 3 anios: ${d.vision}`);
+  L.push("2. PROPOSITO (Circulo Dorado de Sinek)");
+  L.push(`   Por que: ${d.porque || "-"}`);
+  L.push(`   Como: ${d.como || "-"}`);
+  L.push(`   Que: ${d.que || "-"}`);
+  if(d.vision) L.push(`   Hoja de ruta 2030: ${d.vision}`);
   L.push("");
-  L.push("3. DIRECCION - OBJETIVOS (SMARTER)");
-  const objs = d.objetivos.filter(o=>o.objetivo);
+  L.push("3. DIRECCION (Objetivos SMARTER)");
+  const objs=d.objetivos.filter(o=>o.objetivo);
   if(objs.length) objs.forEach((o,i)=> L.push(`   ${i+1}) ${o.objetivo} | Competencia: ${o.competencia||"-"} | Meta: ${o.meta||"-"} | Plazo: ${o.plazo||"-"}`));
   else L.push("   -");
   L.push("");
-  L.push("4. ACCION - PLAN 70-20-10 Y HABITOS");
-  const accs = d.acciones.filter(a=>a.accion);
-  if(accs.length) accs.forEach(a=> L.push(`   [${a.tipo}] ${a.accion} | Indicador: ${a.indicador||"-"}`));
+  L.push("4. ACCION (Matriz de Eisenhower)");
+  const accs=d.acciones.filter(a=>a.accion);
+  if(accs.length) accs.forEach(a=> L.push(`   [${a.cuadrante}] ${a.accion} | Indicador: ${a.indicador||"-"}`));
   else L.push("   -");
   L.push(`   Habitos: ${d.habitos.join(", ") || "-"}`);
   L.push("");
-  L.push("5. EVOLUCION - COMPROMISO Y SEGUIMIENTO");
+  L.push("5. EVOLUCION (Inteligencia Emocional de Goleman)");
+  if(d.emocion) L.push(`   Autogestion bajo presion: ${d.emocion}`);
   L.push(`   Fortalecere: ${d.fortalecer || "-"}`);
   L.push(`   Dejare de hacer: ${d.dejar || "-"}`);
   L.push(`   Conversacion pendiente: ${d.conversacion || "-"}`);
@@ -789,181 +720,174 @@ function buildText(d){
   L.push(`   Compromiso con mi proposito: ${d.compProposito || "-"}`);
   if(d.revision) L.push(`   Seguimiento mensual: ${d.revision}`);
   L.push("");
-  L.push("=".repeat(52));
+  L.push("=".repeat(56));
   L.push("CENTRUM PUCP Business School - Seminario de Competencias - 2026");
   return L.join("\n");
 }
 
 /* ============================================================
-   DESCARGAS (PDF y WORD)
+   DESCARGAS
 ============================================================ */
-function fileName(d, ext){
-  const slug = (d.nombre||"participante").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+function fileName(d,ext){
+  const slug=(d.nombre||"participante").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
     .replace(/[^a-zA-Z0-9]+/g,"_").replace(/^_|_$/g,"");
   return `Plan_Competencias_${slug}.${ext}`;
 }
 function downloadPDF(d){
-  const area = $("#printArea");
-  area.innerHTML = `<style>${DOC_CSS}</style>` + buildHTML(d);
+  const area=$("#printArea");
+  area.innerHTML=`<style>${DOC_CSS}</style>`+buildHTML(d);
   return html2pdf().set({
-    margin:0,
-    filename: fileName(d,"pdf"),
-    image:{type:"jpeg", quality:.98},
-    html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"},
-    jsPDF:{unit:"pt", format:"a4", orientation:"portrait"},
+    margin:0, filename:fileName(d,"pdf"),
+    image:{type:"jpeg",quality:.98},
+    html2canvas:{scale:2,useCORS:true,backgroundColor:"#ffffff"},
+    jsPDF:{unit:"pt",format:"a4",orientation:"portrait"},
     pagebreak:{mode:["css","legacy"]}
   }).from(area).save();
 }
 function downloadWord(d){
-  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office'
-    xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-    <head><meta charset='utf-8'><style>${DOC_CSS} body{margin:0}</style></head>
-    <body>${buildHTML(d)}</body></html>`;
-  const blob = new Blob(['\ufeff', html], {type:"application/msword"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = fileName(d,"doc"); document.body.appendChild(a); a.click();
-  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 500);
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset='utf-8'><style>${DOC_CSS} body{margin:0}</style></head><body>${buildHTML(d)}</body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:"application/msword"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download=fileName(d,"doc");
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url); a.remove();},500);
 }
 
 /* ============================================================
-   ENVÍO DE CORREO (EmailJS)  ·  con manejo de errores claro
+   ENVÍO · Canal 1 (docente, FormSubmit) + Canal 2 (alumno, EmailJS)
 ============================================================ */
-let emailReady = false;
+let emailjsReady=false;
 function initEmail(){
-  const c = EMAILJS_CONFIG;
-  const missing = !c.publicKey || c.publicKey.startsWith("PEGA_") ||
-                  !c.serviceId || c.serviceId.startsWith("PEGA_") ||
-                  !c.templateId || c.templateId.startsWith("PEGA_");
-  if(missing || typeof emailjs === "undefined"){ emailReady = false; return; }
-  try{ emailjs.init({ publicKey: c.publicKey }); emailReady = true; }
-  catch(e){ emailReady = false; }
+  const c=CONFIG.emailjs;
+  const ok = c.publicKey && c.serviceId && c.templateId && typeof emailjs!=="undefined";
+  if(!ok){ emailjsReady=false; return; }
+  try{ emailjs.init({publicKey:c.publicKey}); emailjsReady=true; }catch(e){ emailjsReady=false; }
 }
-function sendEmail(d){
-  return new Promise((resolve, reject)=>{
-    if(!emailReady){
-      reject(new Error("El envío de correo no está configurado. Falta pegar las claves de EmailJS en el archivo (bloque CONFIGURACIÓN DEL CORREO)."));
-      return;
-    }
-    const params = {
-      to_email: d.correo,
-      to_name: d.nombre,
-      reply_to: d.correo,
-      cc_email: EMAILJS_CONFIG.copiaDocente || "",
-      mensaje: buildText(d)
-    };
-    emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
-      .then(resolve)
-      .catch(err=>{
-        const t = (err && (err.text || err.message)) || "Error desconocido de EmailJS.";
-        reject(new Error(t));
-      });
+
+// Canal 1: siempre. Envía el plan al docente vía FormSubmit (sin claves).
+async function sendToDocente(d){
+  const url = "https://formsubmit.co/ajax/" + encodeURIComponent(CONFIG.docenteEmail);
+  const payload = {
+    _subject: `Plan de Competencias - ${d.nombre}`,
+    _template: "table",
+    "Participante": d.nombre,
+    "Correo del alumno": d.correo,
+    "Cargo": d.cargo || "-",
+    "Organización": d.org || "-",
+    "Promedio Core Skills 2030": d.avg!=null ? d.avg.toFixed(2) : "-",
+    "Propósito (¿Por qué?)": d.porque || "-",
+    "Plan completo": buildText(d),
+    "email": d.correo
+  };
+  const res = await fetch(url, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Accept":"application/json" },
+    body: JSON.stringify(payload)
   });
+  if(!res.ok) throw new Error("HTTP "+res.status);
+  const j = await res.json().catch(()=>({}));
+  const success = j.success===true || j.success==="true";
+  if(!success) throw new Error(j.message || "FormSubmit no confirmó el envío.");
+  return true;
+}
+
+// Canal 2: opcional. Envía copia al correo del alumno vía EmailJS.
+async function sendToAlumno(d){
+  if(!emailjsReady) return {skipped:true};
+  await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+    to_email:d.correo, to_name:d.nombre, reply_to:d.correo, mensaje:buildText(d)
+  });
+  return {sent:true};
 }
 
 /* ============================================================
    FLUJO FINAL
 ============================================================ */
-function setStatus(kind, title, msg){
-  const box = $("#statusBox");
-  box.className = "status " + kind;
-  box.innerHTML = `<b>${title}</b>${msg}`;
+function setStatus(kind,title,msg){
+  const box=$("#statusBox"); box.className="status "+kind;
+  box.innerHTML=`<b>${title}</b>${msg}`;
 }
-
 async function generateAndSend(){
-  // valida los pasos con campos obligatorios antes de enviar
-  for(const s of [0,2,5]){
-    if(!validateStep(s)){
-      showStep(s);
-      return;
-    }
-  }
-  const d = collect();
-  const btn = $("#btnSend");
-  btn.disabled = true;
+  for(const s of [0,2,5]){ if(!validateStep(s)){ showStep(s); return; } }
+  const d=collect();
+  const btn=$("#btnSend"); btn.disabled=true;
 
-  // 1) descarga garantizada (siempre funciona, aunque el correo falle)
-  try{ downloadPDF(d); }catch(e){ /* el botón manual queda disponible */ }
+  // Descarga garantizada
+  try{ downloadPDF(d); }catch(e){}
 
-  // 2) envío del correo
-  setStatus("info","<span class='spin'></span>Enviando tu plan…", "Estamos generando tu documento y enviando la copia a "+esc(d.correo)+".");
-  try{
-    await sendEmail(d);
-    setStatus("ok","Listo. Copia enviada a tu correo",
-      `Enviamos tu plan a <b>${esc(d.correo)}</b> (con copia al docente). Si no lo ves en unos minutos, revisa la carpeta de spam o correo no deseado. Tu PDF también se descargó.`);
-  }catch(err){
-    setStatus("err","No se pudo enviar el correo",
-      `Tu plan sí se descargó en este dispositivo, úsalo con los botones de abajo. Detalle técnico: ${esc(err.message)}`);
-  }finally{
-    btn.disabled = false;
+  setStatus("info", `<span class="spin"></span>Enviando tu plan…`, `Generamos tu documento y lo enviamos a tu docente.`);
+
+  let docenteOk=false, docenteErr="", alumno={skipped:true};
+  try{ await sendToDocente(d); docenteOk=true; }
+  catch(err){ docenteErr = (err && err.message) || "Error de red."; }
+  try{ alumno = await sendToAlumno(d); }
+  catch(err){ alumno = {error:(err && (err.text||err.message)) || "Error de EmailJS."}; }
+
+  if(docenteOk){
+    let extra = alumno.sent ? " También enviamos una copia a <b>"+esc(d.correo)+"</b> (revisa spam)."
+              : alumno.error ? " La copia al correo del alumno no salió esta vez, pero tu docente ya lo recibió y tu PDF se descargó."
+              : "";
+    setStatus("ok","Listo. Tu plan fue enviado",
+      `Tu plan llegó a tu docente y se descargó en tu dispositivo.${extra}`);
+  } else {
+    let extra = alumno.sent ? " Aun así, enviamos una copia a tu correo." : "";
+    setStatus("err","No se pudo enviar al docente",
+      `Tu plan sí se descargó en este dispositivo, úsalo con los botones de abajo.${extra} Detalle técnico: ${esc(docenteErr)}`);
   }
+  btn.disabled=false;
 }
 
 /* ============================================================
-   BORRADOR (opcional; se guarda solo si el navegador lo permite)
+   BORRADOR (se guarda solo si el navegador lo permite)
 ============================================================ */
-const DRAFT_KEY = "seminario_competencias_centrum_v1";
+const DRAFT_KEY="seminario_competencias_centrum_v2";
 function saveDraft(){
   try{
-    const data = {};
+    const data={};
     $$("#wizard input, #wizard textarea, #wizard select").forEach(el=>{
-      if(el.type==="radio"||el.type==="checkbox"){ if(el.checked) (data[el.name]=data[el.name]||[]).push(el.value); }
+      if(el.type==="radio"||el.type==="checkbox"){ if(el.checked)(data[el.name]=data[el.name]||[]).push(el.value); }
       else if(el.id){ data[el.id]=el.value; }
+      else if(el.dataset && el.dataset.f){ /* bloques dinámicos: no persistimos individualmente */ }
     });
     data.__objCount=objCount; data.__accCount=accCount; data.__step=current;
     localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
-  }catch(e){/* sin almacenamiento: se ignora */}
+  }catch(e){}
 }
 function loadDraft(){
   try{
-    const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return false;
-    const data = JSON.parse(raw);
-    // reconstruye bloques dinámicos
-    const oc = data.__objCount||1, ac = data.__accCount||1;
+    const raw=localStorage.getItem(DRAFT_KEY); if(!raw) return;
+    const data=JSON.parse(raw);
+    const oc=data.__objCount||1, ac=data.__accCount||1;
     while(objCount<oc) addObjetivo();
     while(accCount<ac) addAccion();
-    // valores simples
-    Object.keys(data).forEach(k=>{
-      if(k.startsWith("__")) return;
-      const el = document.getElementById(k);
-      if(el && typeof data[k]==="string") el.value = data[k];
-    });
-    // radios/checks
-    ["valores","habitos"].forEach(n=>{
-      (data[n]||[]).forEach(v=>{ const el=$(`input[name="${n}"][value="${CSS.escape(v)}"]`); if(el) el.checked=true; });
-    });
+    Object.keys(data).forEach(k=>{ if(k.startsWith("__"))return; const el=document.getElementById(k);
+      if(el && typeof data[k]==="string") el.value=data[k]; });
+    (data.habitos||[]).forEach(v=>{ const el=$(`input[name="habitos"][value="${CSS.escape(v)}"]`); if(el) el.checked=true; });
     COMPETENCIAS.forEach((_,i)=>{ (data["diag"+i]||[]).forEach(v=>{ const el=$(`input[name="diag${i}"][value="${v}"]`); if(el) el.checked=true; }); });
     updateAvg();
-    return true;
-  }catch(e){ return false; }
+  }catch(e){}
 }
 
 /* ============================================================
    INICIO
 ============================================================ */
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded",()=>{
   renderDiag();
-  renderChecks("#valores", VALORES, "valores");
   renderChecks("#habitos", HABITOS, "habitos");
   addObjetivo();
   addAccion();
   initEmail();
   loadDraft();
 
-  $("#addObjetivo").addEventListener("click", ()=>{ addObjetivo(); saveDraft(); });
-  $("#addAccion").addEventListener("click", ()=>{ addAccion(); saveDraft(); });
-
-  $("#btnNext").addEventListener("click", ()=>{
-    if(!validateStep(current)) return;
-    showStep(current+1);
-  });
-  $("#btnPrev").addEventListener("click", ()=> showStep(current-1));
-
-  $("#wizard").addEventListener("input", ()=>{ clearTimeout(window.__t); window.__t=setTimeout(saveDraft,600); });
-
+  $("#addObjetivo").addEventListener("click",()=>{ addObjetivo(); saveDraft(); });
+  $("#addAccion").addEventListener("click",()=>{ addAccion(); saveDraft(); });
+  $("#btnNext").addEventListener("click",()=>{ if(!validateStep(current)) return; showStep(current+1); });
+  $("#btnPrev").addEventListener("click",()=> showStep(current-1));
+  $("#wizard").addEventListener("input",()=>{ clearTimeout(window.__t); window.__t=setTimeout(saveDraft,600); });
   $("#btnSend").addEventListener("click", generateAndSend);
-  $("#btnPdf").addEventListener("click", ()=>{ try{ downloadPDF(collect()); }catch(e){ alert("No se pudo generar el PDF: "+e.message); } });
-  $("#btnWord").addEventListener("click", ()=> downloadWord(collect()));
+  $("#btnPdf").addEventListener("click",()=>{ try{ downloadPDF(collect()); }catch(e){ alert("No se pudo generar el PDF: "+e.message); } });
+  $("#btnWord").addEventListener("click",()=> downloadWord(collect()));
 
   showStep(0);
 });
