@@ -1,0 +1,1 @@
+# plan_seminario_de_competencias
